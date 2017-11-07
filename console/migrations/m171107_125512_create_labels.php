@@ -2,20 +2,15 @@
 
 use yii\db\Migration;
 
-class m171106_144201_create_cargos extends Migration
+class m171107_125512_create_labels extends Migration
 {
     public function safeUp()
     {
         $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
-
-        $this->createTable('{{%cargos}}', [
+        
+        $this->createTable('{{%labels}}', [
             'id' => $this->primaryKey(),
-            'title' => $this->string()->notNull()->unique(),
-            'comment' => $this->string(),
-            'image' => $this->string(),
-            'province' => $this->smallInteger(),
-            'category' => $this->smallInteger(),
-            'status' => $this->smallInteger()->notNull()->defaultValue(0),
+            'title' => $this->string()->notNull(),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
         ], $tableOptions);
@@ -23,8 +18,8 @@ class m171106_144201_create_cargos extends Migration
 
     public function safeDown()
     {
-        echo "m171106_144201_create_cargos cannot be reverted.\n";
-        $this->dropTable('{{%cargos}}');
+        echo "m171107_125512_create_labels cannot be reverted.\n";
+        $this->dropTable('{{%labels}}');
         return false;
     }
 
@@ -37,7 +32,7 @@ class m171106_144201_create_cargos extends Migration
 
     public function down()
     {
-        echo "m171106_144201_create_cargos cannot be reverted.\n";
+        echo "m171107_125512_create_labels cannot be reverted.\n";
 
         return false;
     }

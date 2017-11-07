@@ -6,11 +6,8 @@ class m171107_122844_create_navigation extends Migration
 {
     public function safeUp()
     {
-        $tableOptions = null;
-        if ($this->db->driverName === 'mysql') {
-            $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
-        }
-
+        $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
+        
         $this->createTable('{{%navigation}}', [
             'id' => $this->primaryKey(),
             'title' => $this->string()->notNull(),
@@ -25,6 +22,7 @@ class m171107_122844_create_navigation extends Migration
     public function safeDown()
     {
         echo "m171107_122844_create_navigation cannot be reverted.\n";
+        $this->truncateTable('{{%navigation}}');
         $this->dropTable('{{%navigation}}');
         return false;
     }
