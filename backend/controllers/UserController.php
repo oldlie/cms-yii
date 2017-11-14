@@ -38,8 +38,6 @@ class UserController extends AcfController
      */
     public function actionIndex()
     {
-        \Yii::error('hello world');
-
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
