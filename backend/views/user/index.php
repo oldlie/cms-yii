@@ -62,10 +62,10 @@ $formatter = \Yii::$app->formatter;
                                 <thead>
                                     <tr row="row">
                                         <th>ID</th>
-                                        <th>ACCOUNT</th>
-                                        <th>EMAIL</th>
-                                        <th>TIME</th>
-                                        <th>OPTION</th>
+                                        <th>后台用户</th>
+                                        <th>邮件</th>
+                                        <th>创建时间</th>
+                                        <th>操作</th>
                                     </tr>
                                 </thead>
                                 <tbody>

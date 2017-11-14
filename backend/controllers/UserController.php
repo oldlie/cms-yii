@@ -6,27 +6,30 @@ use common\models\User;
 use backend\models\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\data\Pagination;
+use backend\controllers\AcfController;
 
 /**
  * UserController implements the CRUD actions for User model.
  */
-class UserController extends Controller
+class UserController extends AcfController
 {
     /**
      * @inheritdoc
      */
     public function behaviors()
     {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
+        $behaviors = parent::behaviors();
+        $behaviors['verbs'] = [
+            'class' => VerbFilter::className(),
+            'actions' => [
+                'delete' => ['POST'],
+            ]
         ];
+        // Yii::error($behaviors);
+        return $behaviors;
     }
 
     /**
@@ -35,9 +38,11 @@ class UserController extends Controller
      */
     public function actionIndex()
     {
+        \Yii::error('hello world');
+
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        
+
         $query = $dataProvider->query;
 
         $pagination = new Pagination([
@@ -75,9 +80,9 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
-        $form  = new \backend\models\UserForm();
+        $form = new \backend\models\UserForm();
 
-        if ($form->load(Yii::$app->request->post()) ) {
+        if ($form->load(Yii::$app->request->post())) {
             //&& $form->save()
             //print_r(Yii::$app->request->post());
             //print_r($form);
@@ -88,8 +93,7 @@ class UserController extends Controller
                     'model' => $form,
                 ]);
             }
-        }
-        else {
+        } else {
             $form->username = '';
             $form->password = '';
             $form->email = '';
@@ -107,7 +111,7 @@ class UserController extends Controller
      */
     public function actionUpdate($id)
     {
-        $form  = new \backend\models\UserForm();
+        $form = new \backend\models\UserForm();
 
         if ($form->load(Yii::$app->request->post()) && $form->update($id)) {
             return $this->redirect(['view', 'id' => $id]);
@@ -145,8 +149,7 @@ class UserController extends Controller
     {
         if ( ($model = User::findOne($id)) !== null) {
             return $model;
-        }
-        else {
+        } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
