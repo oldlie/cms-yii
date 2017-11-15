@@ -1,6 +1,19 @@
 # Design Document
 
+> Design roadmap
+
 ## Administrator
+
+### System
+|field|type|note|
+|:----|:----|:----|
+|website_name|string||
+|website_summary|string||
+|website_keys|string||
+|icp|string||
+|upload_url|string||
+|upload_path|string||
+|satic_path|string||
 
 ### Navigation
 

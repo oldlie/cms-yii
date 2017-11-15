@@ -14,6 +14,7 @@ class m171107_122844_create_navigation extends Migration
             'parent' => $this->integer(),
             'comment' => $this->string(),
             'image' => $this->string(),
+            'child_count' => $this->integer()->comment('子节点计数'),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
         ], $tableOptions);

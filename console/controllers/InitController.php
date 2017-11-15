@@ -10,6 +10,7 @@ class InitController extends \yii\console\Controller
      */  
     public function actionAdmin()  
     {  
+        // yii migrate --migrationPath=@yii/rbac/migrations
         echo "创建一个新用户 ...\n";                  // 提示当前操作  
         $username = $this->prompt('User Name:');        // 接收用户名  
         $email = $this->prompt('Email:');               // 接收Email  
@@ -19,6 +20,7 @@ class InitController extends \yii\console\Controller
         $model->email = $email;  
         $model->password = $password;
         $model->auth_key = $model->generateAuthKey();
+        
         if (!$model->save())                            // 保存新的用户  
         {  
             foreach ($model->getErrors() as $error)     // 如果保存失败，说明有错误，那就输出错误信息。  
