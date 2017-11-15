@@ -20,7 +20,11 @@ use yii\widgets\ActiveForm;
     ?>
     <?= $form->field($model, 'title')->textInput(['autofocus' => true])->label('栏目名称：') ?>
     <?= $form->field($model, 'comment')->textInput()->label('简介：') ?>
-    <?= $form->field($model, 'parent')->input('number')->label('父节点：') ?>
+    
+    <div class="form-group">
+        <button class="btn btn-default" data-toggle="modal" data-target="#myModal">选择上一级分类</button>
+    </div>
+
     <?php 
         $imagePath = $form->field($model, 'imagePath')->hiddenInput();
         $imagePath->template = '{input}';
@@ -34,3 +38,30 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
 
 </div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">选择上一级分类</h4><small>点击进入子菜单</small>
+      </div>
+      <div class="modal-body">
+        <div class="list-group" id="categoryList">
+            <button type="button" class="list-group-item">上一级</button>
+            <button type="button" class="list-group-item">test1</button>
+            <button type="button" class="list-group-item">test2</button>
+            <button type="button" class="list-group-item">test3</button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<?php
+$this->registerJsFile('@web/js/navigation.js', ['depends' => ['backend\assets\AppAsset']]);
+?>

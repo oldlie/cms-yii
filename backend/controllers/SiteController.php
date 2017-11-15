@@ -6,17 +6,19 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use backend\controllers\AcfController;
 
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends AcfController
 {
     /**
      * @inheritdoc
      */
     public function behaviors()
     {
+        /*
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -39,6 +41,25 @@ class SiteController extends Controller
                 ],
             ],
         ];
+        */
+        $behaviors = parent::behaviors();
+        $behaviors['access']['rules'] = [
+            [
+                'actions' => ['login', 'error', 'logout', ],
+                'allow' => true,
+            ],
+            [
+                'allow' => true,
+                'roles' => ['admin'],
+            ],
+        ];
+        $behaviors['verbs'] = [
+            'class' => VerbFilter::className(),
+            'actions' => [
+                'logout' => ['post'],
+            ]
+        ];
+        return $behaviors;
     }
 
     /**
