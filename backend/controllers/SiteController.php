@@ -6,6 +6,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use backend\models\SystemSettingForm;
 use backend\controllers\AcfController;
 
 /**
@@ -120,5 +121,23 @@ class SiteController extends AcfController
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    /**
+     * Syetem setting
+     * 
+     */
+    public function actionSetting()
+    {
+        $model = new SystemSettingForm();
+        
+        if (Yii::$app->request->isPost){
+            $model->load(Yii::$app->request->post()) && $model->update();
+        } else {
+            $model->find();
+        }
+        
+        return $this->render('system_setting', ['model' => $model]);
+        
     }
 }

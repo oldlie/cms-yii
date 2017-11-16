@@ -4,6 +4,7 @@ namespace backend\models;
 use Yii;
 use Yii\base\Model;
 use common\models\Navigation;
+use common\models\WebsiteSystem;
 
 class CategoryForm extends Model
 {
@@ -53,25 +54,24 @@ class CategoryForm extends Model
 
     public function save()
     {
-        Yii::error('save');
         if ($this->validate())
         {
-            Yii::error('save valid');
+            $setting = WebsiteSystem::findOne(1);
 
-            $path = Yii::getAlias("@webroot") . '/uploads/' . date('Y') . '/' . date('m');
-            Yii::error('path=>' . $path);
-            if(!is_dir($path)) {
-                mkdir($path, '0777', true);
+            $path = date('Y') . '/' . date('m');
+            $dir  = $setting['upload_path'] . '/' . date('Y') . '/' . date('m');
+            if(!is_dir($dir)) {
+                mkdir($dir, '0777', true);
             }
 
-            $this->imagePath = 'uploads/' . date('Y') . '/' . date('m') . '/' 
+            $this->imagePath = date('Y') . '/' . date('m') . '/' 
                 . substr($this->image->baseName, 0, 10) . '_' . time() . '.' . $this->image->extension;
-
+            
             $model = new Navigation();
             $model->title = $this->title;
             $model->parent = $this->parent;
             $model->comment = $this->comment;
-            $this->image->saveAs($this->imagePath);
+            $this->image->saveAs($setting['upload_path'] . '/' . $this->imagePath);
             $model->image = $this->imagePath;
             $model->created_at = time();
             $model->updated_at = time();

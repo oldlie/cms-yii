@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use Yii;
+use yii\helpers\Url;
 use yii\web\UploadedFile;
 use yii\filters\VerbFilter;
 use backend\controllers\AcfController;
@@ -41,7 +42,7 @@ class CategoryController extends AcfController
             Yii::error('post');
             $model->image = UploadedFile::getInstance($model, 'image');
             $ret = $model->save();
-            print_r($ret . '_xxx');
+            return $this->redirect(Url::to(['category/index']));
         } else {
             return $this->render('create', ['model' => $model]);
         }

@@ -8,7 +8,7 @@ $this->title = '后台管理';
 ?>
 <div class="content-wrapper" >
 
-    <?= MainSidebar::widget(['active_menu' => 100]); ?>
+    <?= MainSidebar::widget(['active_menu' => 101]); ?>
 
     <!-- Content Header (Page header) -->
     <section class="content-header">
