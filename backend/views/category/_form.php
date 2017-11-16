@@ -47,12 +47,15 @@ use yii\widgets\ActiveForm;
         <h4 class="modal-title">选择上一级分类</h4><small>点击进入子菜单</small>
       </div>
       <div class="modal-body">
-        <div class="list-group" id="categoryList">
-            <button type="button" class="list-group-item">上一级</button>
-            <button type="button" class="list-group-item">test1</button>
-            <button type="button" class="list-group-item">test2</button>
-            <button type="button" class="list-group-item">test3</button>
-        </div>
+        <ul class="list-group">
+            <li class="list-group-item">
+                
+            </li>
+            <li class="list-group-item">Dapibus ac facilisis in</li>
+            <li class="list-group-item">Morbi leo risus</li>
+            <li class="list-group-item">Porta ac consectetur ac</li>
+            <li class="list-group-item">Vestibulum at eros</li>
+        </ul>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
