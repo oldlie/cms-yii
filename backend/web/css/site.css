@@ -1,3 +1,8 @@
 .dataTables_wrapper .row {
     padding: 5px 0;
 }
+
+/* add category panel */
+#categoryListPanel .btn-group { width: 100%; }
+#categoryListPanel .btn-group .root-btn {width: 326px;}
+#categoryListPanel .btn-group .item-btn {width: 300px;}

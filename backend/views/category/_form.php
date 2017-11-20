@@ -14,25 +14,31 @@ use yii\widgets\ActiveForm;
         'options' => ['enctype' => 'multipart/form-data']
     ]); ?>
     <?php 
-        $id = $form->field($model, 'id')->hiddenInput();
-        $id->template = '{input}';
-        echo $id->render();
+    $id = $form->field($model, 'id')->hiddenInput();
+    $id->template = '{input}';
+    echo $id->render();
     ?>
     <?= $form->field($model, 'title')->textInput(['autofocus' => true])->label('栏目名称：') ?>
     <?= $form->field($model, 'comment')->textInput()->label('简介：') ?>
     
     <div class="form-group">
         <button class="btn btn-default" data-toggle="modal" data-target="#myModal">选择上一级分类</button>
+        <label id="parentTxtLabel">根目录</label>
+        <?php 
+        $parent = $form->field($model, 'parent')->hiddenInput();
+        $parent->template = '{input}';
+        echo $parent->render();
+        ?>
     </div>
 
     <?php 
-        $imagePath = $form->field($model, 'imagePath')->hiddenInput();
-        $imagePath->template = '{input}';
-        echo $imagePath->render();
+    $imagePath = $form->field($model, 'imagePath')->hiddenInput();
+    $imagePath->template = '{input}';
+    echo $imagePath->render();
     ?>
     <?= $form->field($model, 'image')->fileInput()->label('选择图片：') ?>
     <div class="form-group">
-        <?= Html::submitButton( '提交', ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton('提交', ['class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
@@ -46,16 +52,25 @@ use yii\widgets\ActiveForm;
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">选择上一级分类</h4><small>点击进入子菜单</small>
       </div>
-      <div class="modal-body">
-        <ul class="list-group">
-            <li class="list-group-item">
-                
-            </li>
-            <li class="list-group-item">Dapibus ac facilisis in</li>
-            <li class="list-group-item">Morbi leo risus</li>
-            <li class="list-group-item">Porta ac consectetur ac</li>
-            <li class="list-group-item">Vestibulum at eros</li>
-        </ul>
+      <div class="modal-body" id="categoryListPanel">
+        <div class="btn-group" style="width:100%;">
+            <button type="button" class="btn btn-default root-btn" style="min-width:326px;">根目录</button>
+        </div>
+        
+        <div class="btn-group" style="width:100%;">
+            <button type="button" class="btn btn-default" style="min-width:300px;">Action</button>
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu" role="menu" style="min-width:326px;">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+            </ul>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

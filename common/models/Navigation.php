@@ -12,6 +12,7 @@ use Yii;
  * @property integer $parent
  * @property string $comment
  * @property string $image
+ * @property integer $child_count
  * @property integer $created_at
  * @property integer $updated_at
  */
@@ -32,7 +33,7 @@ class Navigation extends \yii\db\ActiveRecord
     {
         return [
             [['title', 'created_at', 'updated_at'], 'required'],
-            [['parent', 'created_at', 'updated_at'], 'integer'],
+            [['parent', 'child_count', 'created_at', 'updated_at'], 'integer'],
             [['title', 'comment', 'image'], 'string', 'max' => 255],
         ];
     }
@@ -48,6 +49,7 @@ class Navigation extends \yii\db\ActiveRecord
             'parent' => 'Parent',
             'comment' => 'Comment',
             'image' => 'Image',
+            'child_count' => 'Child Count',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];

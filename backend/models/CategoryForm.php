@@ -73,9 +73,20 @@ class CategoryForm extends Model
             $model->comment = $this->comment;
             $this->image->saveAs($setting['upload_path'] . '/' . $this->imagePath);
             $model->image = $this->imagePath;
+            $model->child_count = 0;
             $model->created_at = time();
             $model->updated_at = time();
-            return $model->save();
+
+            if ($model->parent !== 0 && $model->parent !== '0') {
+                $parent = Navigation::findOne($this->parent);
+                $parent->child_count++;
+                if ($parent->save()) {
+                    return $model->save();
+                }
+            } else {
+                return $model->save();
+            }
+            
         }
         Yii::error($this->getErrors());
         return false;
