@@ -22,7 +22,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'comment')->textInput()->label('简介：') ?>
     
     <div class="form-group">
-        <button class="btn btn-default" data-toggle="modal" data-target="#myModal">选择上一级分类</button>
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">选择上一级分类</button>
         <label id="parentTxtLabel">根目录</label>
         <?php 
         $parent = $form->field($model, 'parent')->hiddenInput();

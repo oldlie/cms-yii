@@ -23,11 +23,14 @@ $this->title = 'My Yii Application';
                         <div id="categoryListPanel">
                             <div class="btn-group" style="width:100%;">
                                 <?php
-                                    echo '<a href="' . Url::to(['index', 'id' => $item['parent']]) . '" class="btn btn-default root-btn">'. $item['title'] .'</a>';
+                                    echo '<a href="' . Url::to(['index', 'id' => $item['parent']]) . '" class="btn btn-default" style="width:358px;">'. $item['title'] .'</a>';
                                     foreach( $list as $it ) {
                                         echo 
                                         '<div class="btn-group">' .
                                         '<a href="' . Url::to(['index', 'id' => $it['id']]) . '" class="btn btn-default item-btn">' . $it['title'] . '</a>' .
+                                        '<a href="' . Url::to(['edit', 'id' => $it['id']]) . '" class="btn btn-default dropdown-toggle child-btn" >' .
+                                        '<span class="fa fa-edit"></span><span class="sr-only">Edit</span> ' .
+                                        '</a>' .
                                         '<a href="' . Url::to(['delete', 'id' => $it['id']]) . '" class="btn btn-default dropdown-toggle child-btn" >' .
                                         '<span class="fa fa-trash-o"></span><span class="sr-only">Remove</span> ' .
                                         '</a></div>'

@@ -16,7 +16,7 @@ class UserForm extends \yii\base\Model
     {
         return [
             ['username', 'required', 'message' => '必须填写用户名称。'],
-            ['password', 'default'],
+            [['password', 'nickname'], 'default'],
             ['email', 'email', 'message' => '邮箱地址格式不正确。']
         ];
     }

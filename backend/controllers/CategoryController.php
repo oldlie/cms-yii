@@ -9,6 +9,7 @@ use yii\filters\VerbFilter;
 use backend\controllers\AcfController;
 use backend\models\CategoryForm;
 use common\models\Navigation;
+use backend\models\SystemSettingForm;
 
 class CategoryController extends AcfController
 {
@@ -63,6 +64,30 @@ class CategoryController extends AcfController
         }
     }
 
+    public function actionEdit() 
+    { 
+        $request = Yii::$app->request;
+        $model = new CategoryForm();
+        $tip = '';
+        if ($request->isPost) {
+            if ($model->load($request->post())) {
+                if ($model->id === $model->parent) {
+                    $tip = '上一级目录不能选择自己。';
+                } else {
+                    if (!$model->update()) {
+                        $tip = '没有更新成功，请稍后再试。';
+                    }
+                }
+            } else {
+                $model->title = '数据没有被正确加载，请稍后再试。';
+            }
+        } else {
+            $id = $request->get('id');
+            $model->find($id);
+        }
+        return $this->render('edit', ['tip' => $tip, 'model' => $model]);
+    }
+
     public function actionList()
     {
         $request = Yii::$app->request;
@@ -95,6 +120,12 @@ class CategoryController extends AcfController
             // TODO:
             // need to add condition if there is any post under this category.
 
+            $setting = SystemSettingForm::getSetting();
+            $image = $setting->upload_path . '/' . $model->image;
+            if (file_exists($image)) {
+                unlink($image);
+            } 
+            
             if ($model->delete()) {
                 return $this->redirect(['index', ['id' => $model->parent]]);
             } else {

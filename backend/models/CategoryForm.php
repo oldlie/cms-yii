@@ -5,6 +5,7 @@ use Yii;
 use Yii\base\Model;
 use common\models\Navigation;
 use common\models\WebsiteSystem;
+use backend\models\SystemSettingForm;
 
 class CategoryForm extends Model
 {
@@ -19,7 +20,7 @@ class CategoryForm extends Model
     {
         return [
             ['title', 'required', 'message' => '请指定栏目名称。'],
-            [['image'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
+            [['image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
             [['id', 'comment', 'imagePath'], 'default', 'message' => 'default error'],
             ['parent', 'default', 'value' => 0, 'message' => 'parent error']
         ];
@@ -39,14 +40,31 @@ class CategoryForm extends Model
         return false;
     }
 
-    public function update($id)
+    public function update()
     {
-        if (($model = Navigation::findOne($id)) !== null)
+        if (($model = Navigation::findOne($this->id)) !== null)
         {
+            $setting = SystemSettingForm::getSetting();
+
+            if ($this->image) {
+                $path = date('Y') . '/' . date('m');
+                $dir  = $setting['upload_path'] . '/' . date('Y') . '/' . date('m');
+                if(!is_dir($dir)) {
+                    mkdir($dir, '0777', true);
+                }
+                $this->imagePath = date('Y') . '/' . date('m') . '/' 
+                    . substr($this->image->baseName, 0, 10) . '_' . time() . '.' . $this->image->extension;
+                $this->image->saveAs($setting['upload_path'] . '/' . $this->imagePath);
+            } else {
+                $this->imagePath = '';
+            }
+
             $model->title = $this->title;
-            $model->comment = $this->comment;
             $model->parent = $this->parent;
-            $this->image->saveAs($model->image);
+            $model->comment = $this->comment;
+            $model->image = $this->imagePath;
+            $model->updated_at = time();
+            
             return $model->save();
         }
         return false;
@@ -56,22 +74,26 @@ class CategoryForm extends Model
     {
         if ($this->validate())
         {
-            $setting = WebsiteSystem::findOne(1);
+            //$setting = WebsiteSystem::findOne(1);
+            $setting = SystemSettingForm::getSetting();
 
-            $path = date('Y') . '/' . date('m');
-            $dir  = $setting['upload_path'] . '/' . date('Y') . '/' . date('m');
-            if(!is_dir($dir)) {
-                mkdir($dir, '0777', true);
+            if ($this->image) {
+                $path = date('Y') . '/' . date('m');
+                $dir  = $setting['upload_path'] . '/' . date('Y') . '/' . date('m');
+                if(!is_dir($dir)) {
+                    mkdir($dir, '0777', true);
+                }
+                $this->imagePath = date('Y') . '/' . date('m') . '/' 
+                    . substr($this->image->baseName, 0, 10) . '_' . time() . '.' . $this->image->extension;
+                $this->image->saveAs($setting['upload_path'] . '/' . $this->imagePath);
+            } else {
+                $this->imagePath = '';
             }
-
-            $this->imagePath = date('Y') . '/' . date('m') . '/' 
-                . substr($this->image->baseName, 0, 10) . '_' . time() . '.' . $this->image->extension;
-            
+        
             $model = new Navigation();
             $model->title = $this->title;
             $model->parent = $this->parent;
             $model->comment = $this->comment;
-            $this->image->saveAs($setting['upload_path'] . '/' . $this->imagePath);
             $model->image = $this->imagePath;
             $model->child_count = 0;
             $model->created_at = time();

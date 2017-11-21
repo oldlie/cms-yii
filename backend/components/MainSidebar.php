@@ -18,7 +18,7 @@ class MainSidebar extends Widget {
             ['id' => 100, 'name' => '概览', 'icon' => 'fa fa-dashboard',  'url' => '#',
                 'children' => [
                     ['id' => 101, 'name' => '概览信息', 'url' => Url::to(['site/index'])],
-                    ['id' => 102, 'name' => '系统设置', 'url' => Url::to(['site/setting'])],
+                    ['id' => 102, 'name' => '网站信息', 'url' => Url::to(['site/setting'])],
                 ],
             ],
             ['id' => 200, 'name' => '用户与权限', 'icon' => 'fa fa fa-user-o', 'url' => '#',

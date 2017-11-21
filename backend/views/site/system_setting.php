@@ -5,7 +5,7 @@ use backend\components\MainSidebar;
 
 /* @var $this yii\web\View */
 
-$this->title = '系统设置';
+$this->title = '网站信息';
 ?>
 
 <div class="content-wrapper" >
@@ -19,7 +19,7 @@ $this->title = '系统设置';
             <div class="col-sm-12 col-md-6">
                 <div class="box box-default">
                     <div class="box-header">
-                        <h3 class="box-title">系统设置</h3>
+                        <h3 class="box-title">网站信息</h3>
                     </div>
 
                     <?php $form = ActiveForm::begin([

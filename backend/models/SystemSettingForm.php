@@ -25,6 +25,12 @@ class SystemSettingForm extends Model
         ];
     }
 
+    public static function getSetting() {
+        return Yii::$app->cache->getOrSet('setting', function (){
+            return WebsiteSystem::findOne(1);
+        });
+    }
+
     public function find()
     {
         if (($model = WebsiteSystem::findOne(1)) !== null)
