@@ -43,8 +43,8 @@ class MainSidebar extends Widget {
                 'children' => [
                     ['id' => 401, 'name' => '栏目设置', 'url' => Url::to(['category/index'])],
                     ['id' => 402, 'name' => '增加栏目', 'url' => Url::to(['category/create'])],
-                    ['id' => 403, 'name' => '文章列表', 'url' => Url::to(['news/index'])],
-                    ['id' => 404, 'name' => '写文章', 'url' => Url::to(['news/compose'])],
+                    ['id' => 403, 'name' => '文章列表', 'url' => Url::to(['posts/index'])],
+                    ['id' => 404, 'name' => '写文章', 'url' => Url::to(['posts/compose'])],
                 ]
             ],
             ['id' => 500, 'name' => '系统设置', 'icon' => 'fa fa-gears',  'url' => '#',

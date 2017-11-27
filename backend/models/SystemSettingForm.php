@@ -25,16 +25,42 @@ class SystemSettingForm extends Model
         ];
     }
 
-    public static function getSetting() {
-        return Yii::$app->cache->getOrSet('setting', function (){
-            return WebsiteSystem::findOne(1);
-        });
+    public static function getSetting()
+    {
+        // $query = WebsiteSystem::find()->where(['id', 1]);
+        // $depndence = new \yii\caching\DbDependency(['sql' => $query->sql]);
+
+        return Yii::$app->cache->getOrSet(
+            'setting',
+            function () {
+                return WebsiteSystem::findOne(1);
+            }
+        );
+    }
+
+    public static function getImagePath($imageFile) 
+    {
+        $setting = SystemSettingForm::getSetting();
+        if ($imageFile) {
+            $path = date('Y') . '/' . date('m');
+            $dir = $setting['upload_path'] . '/' . $path;
+            if (!is_dir($dir)) {
+                mkdir($dir, '0777', true);
+            }
+            $image = $path . '/'
+                . substr($imageFile->baseName, 0, 10) . '_' . time()
+                . '.'
+                . $imageFile->extension;
+            $imageFile->saveAs($setting['upload_path'] . '/' . $this->image);
+        } else {
+            $image = '';
+        }
+        return $image;
     }
 
     public function find()
     {
-        if (($model = WebsiteSystem::findOne(1)) !== null)
-        {
+        if ( ($model = WebsiteSystem::findOne(1)) !== null) {
             $this->website_name = $model->website_name;
             $this->website_summary = $model->website_summary;
             $this->website_keys = $model->website_keys;
@@ -47,9 +73,9 @@ class SystemSettingForm extends Model
         return false;
     }
 
-    public function update() {
-        if (($model = WebsiteSystem::findOne(1)) !== null)
-        {
+    public function update()
+    {
+        if ( ($model = WebsiteSystem::findOne(1)) !== null) {
             $model->website_name = $this->website_name;
             $model->website_summary = $this->website_summary;
             $model->website_keys = $this->website_keys;
@@ -57,8 +83,16 @@ class SystemSettingForm extends Model
             $model->upload_url = $this->upload_url;
             $model->upload_path = $this->upload_path;
             $model->satic_path = $this->satic_path;
-            $model->save();
-            return true;
+            if ($model->save()) {
+                // 更新缓存
+                Yii::$app->cache->set('setting', function () {
+                    return WebsiteSystem::findOne(1);
+                });
+                return true;
+            } else {
+                return false;
+            }
+
         }
         return false;
     }
