@@ -1,3 +1,28 @@
+# Project Initialize & Configuration
+
+## Initialize project
+
+### For Windows 7/10 Development/Test Environment
+
+1.  Excute ```> init.bat```
+1.  Select ```Development``` environment
+1.  Update database config file ```common/config/main-local.php```
+1.  Excute ```> php yii migrate``` to create necessary tables.
+1.  Excute ```> php yii init/admin``` to create "admin" account according to the prompt.
+1.  Excute ```> php yii migrate --migrationPath=@yii/rbac/migrations``` to create rbac tables.
+1.  Excute ```> php yii rbac/init``` to add administrator promise to "Admin".
+
+### Config 
+
+```php
+'redactor' => [
+    'class' => 'yii\redactor\RedactorModule',
+    'imageAllowExtensions'=>['jpg','png','gif'],
+    'uploadDir' => 'C:/projects/php/cms-yii/uploads',
+    'uploadUrl' => 'http://localhost/uploads'
+]
+```
+
 Yii 2 Advanced Project Template
 ===============================
 

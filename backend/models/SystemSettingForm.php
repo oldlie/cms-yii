@@ -25,6 +25,10 @@ class SystemSettingForm extends Model
         ];
     }
 
+    /**
+     * 获取后台配置
+     * @return array WebsiteSystem
+     */
     public static function getSetting()
     {
         // $query = WebsiteSystem::find()->where(['id', 1]);
