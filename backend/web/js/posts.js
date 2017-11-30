@@ -1,4 +1,5 @@
 $(function () {
+    var callout = new CallOut('#callOut');
     var reg = /(\s|\.)+/g; // 替换空格为短横线
 
     $('#postsform-title').on('change', function () {
@@ -16,10 +17,13 @@ $(function () {
             $.post(saveNewPostUrl, {
                 'PostsForm[title]' : $('#postsform-title').val(),
                 'PostsForm[slug]' : $('#postsform-slug').val(),
-                'PostsForm[slcontentug]' : $('#postsform-content').val(),
-                'PostsForm[slcontentug]' : $('#postsform-content').val(),
+                'PostsForm[content]' : $('#postsform-content').val()
             }, function(data) {
-                console.log(data);
+                if (data['status'] === 1) {
+                    callout.success('已保存。');
+                } else {
+                    callout.warning(data['message']);
+                }
             });
         }
     });

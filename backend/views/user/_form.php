@@ -14,6 +14,7 @@ use yii\widgets\ActiveForm;
     ]); ?>
 
     <?= $form->field($model, 'username')->textInput(['autofocus' => true])->label('账号：') ?>
+    <?= $form->field($model, 'nickname')->textInput()->label('昵称：') ?>
     <?= $form->field($model, 'password')->passwordInput()->label('密码：') ?>
     <?= $form->field($model, 'email')->input('email')->label('邮箱：') ?>
 

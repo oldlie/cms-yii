@@ -30,13 +30,15 @@ class PostsController extends AcfController
         $request = Yii::$app->request;
         if ($request->isPost) {
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            if ($model->load($request->post())){
+            if ($model->load($request->post(), 'PostsForm')){
+                Yii::trace($request->post());
+                Yii::trace($model);
                 $user = User::findOne(Yii::$app->user->id);
                 if ($user) {
                     $model->author = $user->nickname;
-                    $model->author_id = $user->author_id;
+                    $model->author_id = $user->id;
                     if ($model->save()) {
-                        return ['status' => 0, 'message' => '已保存。', 'id' => $model->id];
+                        return ['status' => 1, 'message' => '已保存。', 'id' => $model->id];
                     } else {
                         return ['status' => 0, 'message' => '保存文章失败。'];        
                     }

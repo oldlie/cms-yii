@@ -50,7 +50,7 @@ AppAsset::register($this);
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <span class="hidden-xs"><?= Yii::$app->user->identity->username ?></span>
+                            <span class="hidden-xs"><?= Yii::$app->user->identity->nickname ?></span>
                         </a>
                     </li>
                     <!-- Control Sidebar Toggle Button -->
