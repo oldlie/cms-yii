@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 ?>
@@ -19,14 +20,13 @@ use yii\widgets\ActiveForm;
                     <div class="box-body">
                         <?= $temp = $form->field($model, 'id', ['template' => '{input}'])->hiddenInput()?>
                         <?= $form->field($model, 'title')->textInput(['autofocus' => true])->label('标题：') ?>
-                        <?= $form->field($model, 'slug', [
-                            'inputOptions' => ['disabled' => 'disabled', 'class' => 'form-control']
-                        ])->textInput()->label('标题唯一：') ?>
+                        <?= $form->field($model, 'slug', ['template' => '{input}'])->hiddenInput() ?>
                         <?= $form->field($model, 'content')->widget(\yii\redactor\widgets\Redactor::className(),[
                             'clientOptions' => [
                                 'imageManagerJson' => ['/redactor/upload/image-json'],
                                 'lang' => 'zh_cn',
-                                'plugins' => ['clips', 'fontcolor','imagemanager']
+                                'plugins' => ['clips', 'fontcolor','imagemanager'],
+                                'rows' => 12,
                             ]
                         ]) ?>
                     </div><!-- ./box-body -->
@@ -66,6 +66,15 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
 
 <?php
+$saveNewPostUrl = Url::to(['posts/ajax-save']);
+$updateNewPostUrl = Url::to(['posts/ajax-update']);
+
+$JS_DEF = <<< js
+var saveNewPostUrl = '$saveNewPostUrl';
+var updateNewPostUrl = '$updateNewPostUrl';
+js;
+
+$this->registerJs($JS_DEF);
 $this->registerJsFile('@web/js/posts.js', ['depends' => 'backend\assets\AppAsset']);
 
 /*

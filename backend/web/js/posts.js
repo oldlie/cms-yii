@@ -13,7 +13,14 @@ $(function () {
         if (id) { // update
 
         } else { // save
-
+            $.post(saveNewPostUrl, {
+                'PostsForm[title]' : $('#postsform-title').val(),
+                'PostsForm[slug]' : $('#postsform-slug').val(),
+                'PostsForm[slcontentug]' : $('#postsform-content').val(),
+                'PostsForm[slcontentug]' : $('#postsform-content').val(),
+            }, function(data) {
+                console.log(data);
+            });
         }
     });
 });
