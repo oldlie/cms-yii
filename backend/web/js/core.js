@@ -51,5 +51,65 @@ var Core = (function(){
         return {"pages": pages, "list" : indexList};
     };
 
+    Core.prototype.jQueryID2ID = function (id) {
+        return id.slice(1);
+    };
+
     return Core;
 })();
+
+var CallOut = (function() {
+    
+        var _isRender = false;
+        var _counter = 1;
+        var core = new Core();
+        var _targetElement;
+    
+        function CallOut(targetElement) {
+            _targetElement = targetElement;
+        }
+    
+        var _tpl = {
+            callOut : '<div id="@{id}" style="width: 30%; position: fixed; top: 0px; right: 0px; z-index: 99999;background-color: transparent;"></div>'
+        };
+    
+        function render() {
+            if (!_isRender) {
+                if (!_targetElement) {
+                    throw "target element undefined";
+                }
+                $(_targetElement).replaceWith(core.html(_tpl.callOut, {id: core.jQueryID2ID(_targetElement) }));
+            }
+        }
+    
+        function showMessage(html) {
+            render();
+            var id = _targetElement + "-" + _counter.toString();
+            _counter++;
+            $(_targetElement).append('<div style="margin: 10px; width:100%;" id="' + core.jQueryID2ID(id)  + '">' + html + "</div>");
+            setTimeout(function () { $(id).remove() }, 3000);
+        }
+    
+        CallOut.prototype.success = function (message) {
+            return showMessage('<div class="callout callout-success"><i class="fa fa-check"></i>&nbsp;&nbsp;'
+            + message +
+            '</div>');
+        };
+        CallOut.prototype.info = function (message) {
+            return showMessage('<div class="callout callout-info"><i class="fa fa-exclamation-circle"></i>&nbsp;&nbsp;'
+            + message
+            + '</div>');
+        };
+        CallOut.prototype.warning = function (message) {
+            return showMessage('<div class="callout callout-warning"><i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;'
+            + message
+            + '</div>');
+        };
+        CallOut.prototype.danger = function (message) {
+            return showMessage('<div class="callout callout-danger"><i class="fa fa-exclamation"></i>&nbsp;&nbsp;'
+            + message
+            + '</div>');
+        };
+    
+        return CallOut;
+    })();

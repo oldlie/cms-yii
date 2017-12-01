@@ -30,20 +30,16 @@ class PostsController extends AcfController
         $request = Yii::$app->request;
         if ($request->isPost) {
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            Yii::trace('ajax save.');
-            if ($model->load($request->post())){
-                Yii::trace('ajax save load.');
+            if ($model->load($request->post(), 'PostsForm')){
                 Yii::trace($request->post());
-                yii::trace($request->post('PostsForm[content]'));
+                Yii::trace($model);
                 $user = User::findOne(Yii::$app->user->id);
                 if ($user) {
                     Yii::trace('ajax save: find user');
                     $model->author = $user->nickname;
                     $model->author_id = $user->id;
-                    $model->status = 0;
                     if ($model->save()) {
-                        Yii::trace('ajax save: save user');
-                        return ['status' => 0, 'message' => '已保存。', 'id' => $model->id];
+                        return ['status' => 1, 'message' => '已保存。', 'id' => $model->id];
                     } else {
                         Yii::trace('ajax save: save user faild');
                         Yii::error($model->errors);

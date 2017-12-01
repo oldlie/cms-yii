@@ -25,7 +25,7 @@ use yii\widgets\ActiveForm;
                             'clientOptions' => [
                                 'imageManagerJson' => ['/redactor/upload/image-json'],
                                 'lang' => 'zh_cn',
-                                'plugins' => ['clips', 'fontcolor','imagemanager']
+                                'plugins' => ['clips', 'fontcolor','imagemanager'],
                             ]
                         ]) ?>
                     </div><!-- ./box-body -->
@@ -35,35 +35,11 @@ use yii\widgets\ActiveForm;
                     </div>
                 </div>
             </div> <!-- ./ col-md-8 -->
-            <div class="col-sm-12 col-md-4">
-                <div class="box box-info">
-                    <div class="box-header">
-                        <h3 class="box-title">选项：</h3>
-                    </div>
-                    <div class="box-body">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <?php
-                                if (!empty($model->image)) {
-                                    echo '<img src="' . $url . '/' . $model->image . '">';
-                                }
-                                ?>
-                                <?= $form->field($model, 'image')->fileInput()->label('选择题图：') ?>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <?= $form->field($model, 'comment_status')->checkbox(['label' => '是否允许评论']) ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="box-footer"></div>
-                </div>
-            </div>
         </div> <!-- ./ first row -->
 
     <?php ActiveForm::end(); ?>
 
+    <div id="callOut"></div>
 <?php
 $saveNewPostUrl = Url::to(['posts/ajax-save']);
 $updateNewPostUrl = Url::to(['posts/ajax-update']);
@@ -73,7 +49,7 @@ var saveNewPostUrl = '$saveNewPostUrl';
 var updateNewPostUrl = '$updateNewPostUrl';
 js;
 
-$this->registerJs($JS_DEF, \yii\web\View::POS_BEGIN);
+$this->registerJs($JS_DEF, \Yii\web\View::POS_BEGIN);
 $this->registerJsFile('@web/js/posts.js', ['depends' => 'backend\assets\AppAsset']);
 
 /*

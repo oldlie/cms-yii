@@ -28,7 +28,10 @@ class PostsForm extends \yii\base\Model
         return [
             [['id', 'author_id', 'publisher_id', 'editor_id'], 'integer'],
             [['title', 'slug'], 'required', 'message' => '请填入值。'],
-            // [['author, publisher, editor, image, content'], 'default', 'value' => ''],
+            [['content'], 'string'],
+            [['title', 'slug', 'image'], 'string', 'max' => 255],
+            [['author', 'publisher', 'editor'], 'string', 'max' => 32],
+            [['author_id', 'publisher_id', 'editor_id', 'status', 'comment_status'], 'integer'],
             [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
             [['status', 'comment_status'], 'default', 'value' => 0]
         ];
@@ -115,11 +118,13 @@ class PostsForm extends \yii\base\Model
             $model->comment_status = $this->comment_status;
             $model->created_at = time();
             $model->updated_at = time();
-            Yii::trace($this);
-            Yii::trace($model);
-            return $model->save();
+            Yii::trace('prepare save.');
+            if ($model->save()) {
+                $this->id = $model->id;
+                return true;
+            } 
         } else {
-            Yii::trace($model->errors);
+            Yii::error($model->errors);
         }
         return false;
     }

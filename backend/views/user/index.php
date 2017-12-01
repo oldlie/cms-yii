@@ -63,6 +63,7 @@ $formatter = \Yii::$app->formatter;
                                     <tr row="row">
                                         <th>ID</th>
                                         <th>后台用户</th>
+                                        <th>昵称</th>
                                         <th>邮件</th>
                                         <th>创建时间</th>
                                         <th>操作</th>
@@ -73,6 +74,7 @@ $formatter = \Yii::$app->formatter;
                                     echo '<tr>' 
                                     . '<td>' . $user['id'] . '</td>'
                                     . '<td>' . $user['username'] . '</td>'
+                                    . '<td>' . $user['nickname'] . '</td>'
                                     . '<td>' . $user['email'] . '</td>'
                                     . '<td>' . $formatter->asDatetime($user['updated_at']) . '</td>'
                                     . '<td>'
