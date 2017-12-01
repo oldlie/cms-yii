@@ -26,9 +26,9 @@ class PostsForm extends \yii\base\Model
     public function rules()
     {
         return [
-            ['id', 'safe'],
+            [['id', 'author_id', 'publisher_id', 'editor_id'], 'integer'],
             [['title', 'slug'], 'required', 'message' => '请填入值。'],
-            [['author, publisher, editor, image, content'], 'default', 'value' => ''],
+            // [['author, publisher, editor, image, content'], 'default', 'value' => ''],
             [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
             [['status', 'comment_status'], 'default', 'value' => 0]
         ];
@@ -81,6 +81,7 @@ class PostsForm extends \yii\base\Model
     public function save()
     {
         if ($this->validate()) {
+            Yii::trace('validated.');
             /*
             $setting = SystemSettingForm::getSetting();
 
@@ -112,8 +113,13 @@ class PostsForm extends \yii\base\Model
             $model->content = $this->content;
             $model->status = $this->status;
             $model->comment_status = $this->comment_status;
-
+            $model->created_at = time();
+            $model->updated_at = time();
+            Yii::trace($this);
+            Yii::trace($model);
             return $model->save();
+        } else {
+            Yii::trace($model->errors);
         }
         return false;
     }

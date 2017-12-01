@@ -10,15 +10,19 @@ $(function () {
     $('#saveDraftBtn').on('click', function () {
         var id = $('#postsform-id').val();
         console.log('save draft id:', id);
+        var data = {
+            'PostsForm[title]' : $('#postsform-id').val(),
+            'PostsForm[title]' : $('#postsform-title').val(),
+            'PostsForm[slug]' : $('#postsform-slug').val(),
+            'PostsForm[content]' : $('#postsform-content').val(),
+            'PostsForm[comment_status]' : $('#postsform-comment_status').val(),
+        };
         if (id) { // update
-
+            $.post(updateNewPostUrl, data, function(data) {
+                console.log(data);
+            });
         } else { // save
-            $.post(saveNewPostUrl, {
-                'PostsForm[title]' : $('#postsform-title').val(),
-                'PostsForm[slug]' : $('#postsform-slug').val(),
-                'PostsForm[slcontentug]' : $('#postsform-content').val(),
-                'PostsForm[slcontentug]' : $('#postsform-content').val(),
-            }, function(data) {
+            $.post(saveNewPostUrl, data, function(data) {
                 console.log(data);
             });
         }

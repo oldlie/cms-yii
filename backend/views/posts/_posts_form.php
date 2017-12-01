@@ -25,8 +25,7 @@ use yii\widgets\ActiveForm;
                             'clientOptions' => [
                                 'imageManagerJson' => ['/redactor/upload/image-json'],
                                 'lang' => 'zh_cn',
-                                'plugins' => ['clips', 'fontcolor','imagemanager'],
-                                'rows' => 12,
+                                'plugins' => ['clips', 'fontcolor','imagemanager']
                             ]
                         ]) ?>
                     </div><!-- ./box-body -->
@@ -74,7 +73,7 @@ var saveNewPostUrl = '$saveNewPostUrl';
 var updateNewPostUrl = '$updateNewPostUrl';
 js;
 
-$this->registerJs($JS_DEF);
+$this->registerJs($JS_DEF, \yii\web\View::POS_BEGIN);
 $this->registerJsFile('@web/js/posts.js', ['depends' => 'backend\assets\AppAsset']);
 
 /*
