@@ -12,6 +12,38 @@ $this->title = 'My Yii Application';
 
     <!-- Main content -->
     <section class="content">
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div id="app">
+          {{message}}
+        </div>
+        <div id="app-2">
+          <span v-bind:title="message">
+            事件绑定
+          </span>
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <div id="app-7">
+          <ol>
+            <!--
+              现在我们为每个 todo-item 提供 todo 对象
+              todo 对象是变量，即其内容可以是动态的。
+              我们也需要为每个组件提供一个“key”，晚些时候我们会做个解释。
+            -->
+            <todo-item
+              v-for="item in groceryList"
+              v-bind:todo="item"
+              v-bind:key="item.id">
+            </todo-item>
+          </ol>
+        </div> <!-- ./app-7 -->
+      </div> <!-- ./col-sm12 -->
+    </div>
+
+    
+
     <div class="row">
         <div class="col-md-3">
           <a href="compose.html" class="btn btn-primary btn-block margin-bottom">写文章</a>
@@ -125,3 +157,8 @@ $this->title = 'My Yii Application';
     </section>
 
 </div>
+
+<?php
+$this->registerJsFile('@web/js/vue.js');
+$this->registerJsFile('@web/js/posts/index.js', ['depends' => 'backend\assets\AppAsset']);
+?>
