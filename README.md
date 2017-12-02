@@ -4,13 +4,13 @@
 
 ### For Windows 7/10 Development/Test Environment
 
-1.  Excute ```> init.bat```
+1.  Excute ```> init.bat```: initialize project.
 1.  Select ```Development``` environment
 1.  Update database config file ```common/config/main-local.php```
-1.  Excute ```> php yii migrate``` to create necessary tables.
-1.  Excute ```> php yii init/admin``` to create "admin" account according to the prompt.
-1.  Excute ```> php yii migrate --migrationPath=@yii/rbac/migrations``` to create rbac tables.
-1.  Excute ```> php yii rbac/init``` to add administrator promise to "Admin".
+1.  Excute ```> php yii migrate```: create necessary tables.
+1.  Excute ```> php yii init/admin```: create "admin" account according to the prompt.
+1.  Excute ```> php yii migrate --migrationPath=@yii/rbac/migrations```: create rbac tables.
+1.  Excute ```> php yii rbac/init```: add administrator promise to "Admin".
 
 ### Config 
 
@@ -27,7 +27,7 @@
 
 |Start Date|Task|Status|Comment|
 |:----|:----|:----|:----|
-|2017/11/29|publish article|0|Done.|
+|2017/11/29|publish article|0|developing...|
 |2017/11/29|添加草稿|1|Done.|
 
 Yii 2 Advanced Project Template
