@@ -6,13 +6,19 @@ use yii\helpers\Url;
 use common\models\User;
 use backend\controllers\AcfController;
 use backend\models\PostsForm;
+use backend\models\PostsSearch;
 use backend\models\SystemSettingForm;
 
 class PostsController extends AcfController
 {
     public function actionIndex()
     {
-        return $this->render('index');
+
+        $postsSearch = new PostsSearch();
+        return $this->render('index', [
+            'title' => 'Darft',
+            'list' => $models,
+        ]);
     }
 
     public function actionCompose()

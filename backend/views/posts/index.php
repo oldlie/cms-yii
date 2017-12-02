@@ -1,9 +1,16 @@
 <?php
+use yii\helpers\Url;
 use backend\components\MainSidebar;
+use backend\components\listpanel\ListPanel;
 
 /* @var $this yii\web\View */
 
 $this->title = 'My Yii Application';
+$folderList = [
+  ['id' => 1, 'icon' => 'fa fa-pencil-square-o', 'text' => '草稿箱', 'url' => Url::to(['posts/index'])] ,
+  ['id' => 2, 'icon' => 'fa fa-newspaper-o', 'text' => '已发布', 'url' => Url::to(['posts/published'])] ,
+];
+$activeId = 1;
 ?>
 
 <div class="content-wrapper" >
@@ -14,66 +21,20 @@ $this->title = 'My Yii Application';
     <section class="content">
 
     <div class="row">
-      <div class="col-sm-12">
-        <div id="app">
-          {{message}}
-        </div>
-        <div id="app-2">
-          <span v-bind:title="message">
-            事件绑定
-          </span>
-        </div>
-      </div>
-      <div class="col-sm-12">
-        <div id="app-7">
-          <ol>
-            <!--
-              现在我们为每个 todo-item 提供 todo 对象
-              todo 对象是变量，即其内容可以是动态的。
-              我们也需要为每个组件提供一个“key”，晚些时候我们会做个解释。
-            -->
-            <todo-item
-              v-for="item in groceryList"
-              v-bind:todo="item"
-              v-bind:key="item.id">
-            </todo-item>
-          </ol>
-        </div> <!-- ./app-7 -->
-      </div> <!-- ./col-sm12 -->
-    </div>
-
-    
-
-    <div class="row">
         <div class="col-md-3">
           <a href="compose.html" class="btn btn-primary btn-block margin-bottom">写文章</a>
 
-          <div class="box box-solid">
-            <div class="box-header with-border">
-              <h3 class="box-title">文件夹</h3>
-
-              <div class="box-tools">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-              </div>
-            </div>
-            <div class="box-body no-padding">
-              <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="#"><i class="fa fa-inbox"></i> 草稿</a></li>
-                <li><a href="#"><i class="fa fa-envelope-o"></i> 已发布</a></li>
-                <li><a href="#"><i class="fa fa-file-text-o"></i> 隐藏</a></li>
-              </ul>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /. box -->
+          <?= ListPanel::widget(['title' => '文件夹', 
+            'list' => $folderList,
+            'activeId' => $activeId,
+          ]); ?>
           
         </div>
         <!-- /.col -->
         <div class="col-md-9">
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">草稿</h3>
+              <h3 class="box-title"><?=$title?></h3>
 
               <div class="box-tools pull-right">
                 <div class="has-feedback">
