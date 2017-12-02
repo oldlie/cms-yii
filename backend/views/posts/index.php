@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Url;
 use backend\components\MainSidebar;
+use backend\components\LeftRightPagination;
 use backend\components\listpanel\ListPanel;
 
 /* @var $this yii\web\View */
@@ -48,36 +49,42 @@ $activeId = 1;
             <div class="box-body no-padding">
               <div class="mailbox-controls">
                 <!-- Check all button -->
-                <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
+                
                 </button>
                 <div class="btn-group">
+                  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-square-o"></i>
                   <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
-                  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
-                  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>
+                  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
                 </div>
                 <!-- /.btn-group -->
-                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
+                
                 <div class="pull-right">
-                  1-50/200
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
-                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
-                  </div>
+                  <?= LeftRightPagination::widget(['pagination' => $pagination])?>
                   <!-- /.btn-group -->
                 </div>
                 <!-- /.pull-right -->
               </div>
               <div class="table-responsive mailbox-messages">
                 <table class="table table-hover table-striped">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>作者</th>
+                      <th>标题</th>
+                      <th>更新时间</th>
+                      <th>写作时间</th>
+                    </tr>
+                  </thead>
                   <tbody>
-                  <tr>
-                    <td><input type="checkbox"></td>
-                    <td class="mailbox-star"><a href="#"><i class="fa fa-star text-yellow"></i></a></td>
-                    <td class="mailbox-name"><a href="read-mail.html">Alexander Pierce</a></td>
-                    <td class="mailbox-subject"><b>AdminLTE 2.0 Issue</b> - Trying to find a solution to this problem...
-                    </td>
-                    <td class="mailbox-attachment"><i class="fa fa-paperclip"></i></td>
-                    <td class="mailbox-date">15 days ago</td>
+                    <?php
+                    foreach($models as $item) {
+                      echo '<tr><td><input type="checkbox" data-value="' . $item['id'] . '"></td>' .
+                      '<td class="mailbox-name"><a href="' . Url::to(['user/view', 'id' => $item['author_id']]) . '">' . $item['author'] . '</a></td>' .
+                      '<td class="mailbox-subject"><a href="' . Url::to(['posts/view', 'id' => $item['id']]) . '">'. $item['title'] . '</td>' .
+                      '<td class="mailbox-date">'. Yii::$app->formatter->asDate($item['updated_at'], 'yyyy-MM-dd HH:mm:ss') .'</td>' .
+                      '<td class="mailbox-date">'. Yii::$app->formatter->asDate($item['created_at'], 'yyyy-MM-dd HH:mm:ss') .'</td></tr>';
+                    }
+                    ?>
                   </tr>
                   </tbody>
                 </table>
@@ -89,21 +96,14 @@ $activeId = 1;
             <div class="box-footer no-padding">
               <div class="mailbox-controls">
                 <!-- Check all button -->
-                <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
-                </button>
                 <div class="btn-group">
+                  <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
                   <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
-                  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-reply"></i></button>
-                  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-share"></i></button>
+                  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
                 </div>
                 <!-- /.btn-group -->
-                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
                 <div class="pull-right">
-                  1-50/200
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
-                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
-                  </div>
+                  <?= LeftRightPagination::widget(['pagination' => $pagination])?>
                   <!-- /.btn-group -->
                 </div>
                 <!-- /.pull-right -->

@@ -3,7 +3,9 @@
 namespace backend\models;
 
 use Yii;
+use yii\db\Query;
 use yii\base\Model;
+use yii\data\ActiveDataProvider;
 use common\models\Posts;
 
 class PostsSearch extends Posts
@@ -42,6 +44,7 @@ class PostsSearch extends Posts
             'pagination' => [
                 'pageSize' => 20,
             ],
+            'key' => 'id'
         ]);
         $this->load($params);
         if (!$this->validate()) {

@@ -13,11 +13,14 @@ class PostsController extends AcfController
 {
     public function actionIndex()
     {
-
+        $request = Yii::$app->request;
         $postsSearch = new PostsSearch();
+        $dataProvider = $postsSearch->search($request->post());
+
         return $this->render('index', [
-            'title' => 'Darft',
-            'list' => $models,
+            'title' => '草稿',
+            'models' => $dataProvider->getModels(),
+            'pagination' => $dataProvider->getPagination()
         ]);
     }
 
