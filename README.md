@@ -27,7 +27,8 @@
 
 |Start Date|Task|Status|Comment|
 |:----|:----|:----|:----|
-|2017/11/29|添加草稿|0|还未开始|
+|2017/11/29|publish article|0|Done.|
+|2017/11/29|添加草稿|1|Done.|
 
 Yii 2 Advanced Project Template
 ===============================

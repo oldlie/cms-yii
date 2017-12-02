@@ -15,10 +15,23 @@ class PostsController extends AcfController
     {
         $request = Yii::$app->request;
         $postsSearch = new PostsSearch();
-        $dataProvider = $postsSearch->search($request->post());
+        $dataProvider = $postsSearch->searchDraft($request->post());
 
         return $this->render('index', [
-            'title' => '草稿',
+            'activeId' => 1,
+            'models' => $dataProvider->getModels(),
+            'pagination' => $dataProvider->getPagination()
+        ]);
+    }
+
+    public function actionPublished() 
+    {
+        $request = Yii::$app->request;
+        $postsSearch = new PostsSearch();
+        $dataProvider = $postsSearch->searchPublished($request->post());
+
+        return $this->render('index', [
+            'activeId' => 2,
             'models' => $dataProvider->getModels(),
             'pagination' => $dataProvider->getPagination()
         ]);

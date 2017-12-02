@@ -17,11 +17,13 @@ class AppAsset extends AssetBundle
         'css/ionicons.min.css',
         'css/adminlte.min.css',
         'css/skins/_all-skins.css',
+        'iCheck/all.css',
         'css/site.css',
     ];
     public $js = [
         'bootstrap/js/bootstrap.min.js',
         'js/adminlte.min.js',
+        'iCheck/icheck.min.js',
         'js/core.js',
     ];
     public $depends = [

@@ -11,7 +11,7 @@ $folderList = [
   ['id' => 1, 'icon' => 'fa fa-pencil-square-o', 'text' => '草稿箱', 'url' => Url::to(['posts/index'])] ,
   ['id' => 2, 'icon' => 'fa fa-newspaper-o', 'text' => '已发布', 'url' => Url::to(['posts/published'])] ,
 ];
-$activeId = 1;
+$title = $activeId === 1 ? '草稿' : '已发布';
 ?>
 
 <div class="content-wrapper" >
@@ -52,9 +52,9 @@ $activeId = 1;
                 
                 </button>
                 <div class="btn-group">
-                  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-square-o"></i>
+                  <button type="button" class="btn btn-default btn-sm select-all-btn" data-value="0"><i class="fa fa-square-o"></i>
                   <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
-                  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
+                  <button type="button" class="btn btn-default btn-sm refresh-btn"><i class="fa fa-refresh"></i></button>
                 </div>
                 <!-- /.btn-group -->
                 
@@ -97,9 +97,9 @@ $activeId = 1;
               <div class="mailbox-controls">
                 <!-- Check all button -->
                 <div class="btn-group">
-                  <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
+                <button type="button" class="btn btn-default btn-sm select-all-btn" data-value="0"><i class="fa fa-square-o"></i>
                   <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
-                  <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
+                  <button type="button" class="btn btn-default btn-sm refresh-btn"><i class="fa fa-refresh"></i></button>
                 </div>
                 <!-- /.btn-group -->
                 <div class="pull-right">
@@ -120,6 +120,7 @@ $activeId = 1;
 </div>
 
 <?php
-$this->registerJsFile('@web/js/vue.js');
+// $this->registerJsFile('@web/js/vue.js');
+$this->registerJsFile('@web/iCheck/icheck.min.js', ['depends' => 'backend\assets\AppAsset']);
 $this->registerJsFile('@web/js/posts/index.js', ['depends' => 'backend\assets\AppAsset']);
 ?>

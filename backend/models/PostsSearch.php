@@ -36,7 +36,7 @@ class PostsSearch extends Posts
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    private function search($params, $status)
     {
         $query = Posts::find();
         $dataProvider = new ActiveDataProvider([
@@ -51,8 +51,21 @@ class PostsSearch extends Posts
             return $dataProvider;
         }
 
+        $query->andFilterWhere([
+            'status' => $status,
+        ]);
         $query->andFilterWhere(['like', 'title', $this->title]);
 
         return $dataProvider;
+    }
+
+    public function searchDraft($params)
+    {
+        return $this->search($params, 0);
+    }
+
+    public function searchPublished($params)
+    {
+        return $this->search($params, 1);
     }
 }
