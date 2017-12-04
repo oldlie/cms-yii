@@ -4,6 +4,7 @@ namespace backend\controllers;
 use Yii;
 use yii\helpers\Url;
 use common\models\User;
+use common\models\Posts;
 use backend\controllers\AcfController;
 use backend\models\PostsForm;
 use backend\models\PostsSearch;
@@ -93,6 +94,27 @@ class PostsController extends AcfController
             } else {
                 return ['status' => 0, 'message' => '数据加载到模型失败。'];
             }
+        }
+
+        return $this->redirect(Url::to(['site/login']));
+    }
+
+    public function actionAjaxDeleteDraft()
+    {
+        $request = Yii::$app->request;
+        if ($request->isPost) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            $id = $request->post('id');
+            if ($id) {
+                $model = Posts::findOne($id);
+                if ($model) {
+                    if ($model->delete()) {
+                        return ['status' => 1, 'message' => '已删除。'];
+                    }
+                }
+            } 
+            
+            return ['status' => 0, 'message' => '没有找到要删除的文章，刷新列表试试。'];
         }
 
         return $this->redirect(Url::to(['site/login']));
