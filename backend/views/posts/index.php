@@ -82,6 +82,7 @@ $title = $activeId === 1 ? '草稿' : '已发布';
                       '<td class="mailbox-subject"><a href="' . Url::to(['posts/view', 'id' => $item['id']]) . '">'. $item['title'] . '</td>' .
                       '<td class="mailbox-subject">' .
                       '<a class="btn-edit" data-value="' . $item['id'] .'"><i class="fa fa-edit"></i></a> ' .
+                      '<a href="' . Url::to(['posts/publish', 'id' => $item['id']]) . '"><i class="fa fa-caret-square-o-right"></i></a> ' .
                       '<a class="text-danger btn-delete" data-value="' . $item['id'] .'"><i class="fa fa-trash"></i></a>' .
                       '</td>' .
                       '<td class="mailbox-date">'. Yii::$app->formatter->asDate($item['updated_at'], 'yyyy-MM-dd HH:mm:ss') .'</td>' .

@@ -119,4 +119,19 @@ class PostsController extends AcfController
 
         return $this->redirect(Url::to(['site/login']));
     }
+
+    public function actionPublish()
+    {
+        $request = Yii::$app->request;
+        $id = $request->get('id');
+        if ($id) {
+            $model = Posts::findOne($id);
+            return $this->render('publish', [
+                'id' => $id,
+                'title' => $model->title,
+            ]);
+        } else {
+            return $this->redirect(['posts/index']);
+        }
+    }
 }

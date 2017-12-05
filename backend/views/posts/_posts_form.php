@@ -8,6 +8,7 @@ use yii\widgets\ActiveForm;
 
 <?php $form = ActiveForm::begin([
         'id' => 'posts-form',
+        'action' => Url::to(['posts/publish']),
         'options' => ['enctype' => 'multipart/form-data']
     ]); ?>
 
