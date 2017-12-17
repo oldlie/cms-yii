@@ -30,14 +30,21 @@ $this->title = '发布文章';
             <div class="col-sm-12 col-md-8">
 
                 <div class="box box-default">
-                    <div class="box-header">
-                        <h3><?=$title?></h3>
+                    <div class="box-header with-border">
+                        <h3><?= $model->title ?></h3>
                     </div>
                     <div class="box-body">
-                        
+
+                        <?= $form->field($model, 'id', ['template' => '{input}'])->hiddenInput() ?>
+                        <?= $form->field($model, 'categoryId', ['template' => '{input}'])->hiddenInput() ?>
+                        <?= $form->field($model, 'image', ['template' => '{input}'])->hiddenInput() ?>
+                        <?= $form->field($model, 'imageFile')->fileInput()->label('选择标题图片：') ?>
+                        <?= $form->field($model, 'allowComment')->checkbox(['label' => '允许评论']) ?>
+                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#categoryModel">选择所在栏目</button>
+
                     </div>
                     <div class="box-footer">
-                        <?= Html::submitButton('发布', ['class' => 'btn btn-primary']) ?>
+                        <?= Html::submitButton('发布文章', ['class' => 'btn btn-primary']) ?>
                     </div>
                 </div>
 
@@ -48,6 +55,30 @@ $this->title = '发布文章';
 
     <?php ActiveForm::end(); ?>
 </div>
+
+<div class="modal" id="categoryModel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">选择文章所在栏目</h4>
+            </div>
+            <div class="modal-body">
+            <p>One fine body&hellip;</p>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-primary">选择</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+<!-- /.modal -->
+</div>
+
 <div id="callOut"></div>
 <?php
 $deleteDraftUrl = Url::to(['posts/ajax-delete-draft']);

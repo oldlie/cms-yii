@@ -27,6 +27,7 @@ use yii\widgets\ActiveForm;
                                 'imageManagerJson' => ['/redactor/upload/image-json'],
                                 'lang' => 'zh_cn',
                                 'plugins' => ['clips', 'fontcolor','imagemanager'],
+                                'minHeight' => 600
                             ]
                         ]) ?>
                     </div><!-- ./box-body -->

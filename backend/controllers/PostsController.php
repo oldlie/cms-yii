@@ -9,6 +9,7 @@ use backend\controllers\AcfController;
 use backend\models\PostsForm;
 use backend\models\PostsSearch;
 use backend\models\SystemSettingForm;
+use backend\models\PublishForm;
 
 class PostsController extends AcfController
 {
@@ -125,10 +126,16 @@ class PostsController extends AcfController
         $request = Yii::$app->request;
         $id = $request->get('id');
         if ($id) {
-            $model = Posts::findOne($id);
+            $post = Posts::findOne($id);
+            $model = new PublishForm();
+            $model->id = $id;
+            $model->title = $post->title;
+            $model->image = '';
+            $model->imageFile = '';
+            $model->categoryId = 0;
+            $model->allowComment = 0;
             return $this->render('publish', [
-                'id' => $id,
-                'title' => $model->title,
+                'model' => $model,
             ]);
         } else {
             return $this->redirect(['posts/index']);
