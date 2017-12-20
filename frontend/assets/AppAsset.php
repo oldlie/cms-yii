@@ -13,8 +13,11 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/site.css',
+        'css/style.css'
     ];
     public $js = [
+        'js/superslide.2.1.js',
+        'js/style.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
