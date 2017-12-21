@@ -37,6 +37,33 @@ use yii\widgets\ActiveForm;
                     </div>
                 </div>
             </div> <!-- ./ col-md-8 -->
+
+            <div class="col-sm-12 col-md-4">
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">发布设置</h3>
+                    </div>
+
+                    <div class="box-body">
+                        <div class="form-group">
+                            每隔<input type="number" class="short-input-text" value="15">秒自动保存草稿
+                            <button class="btn btn-default">设置</button>
+                        </div>
+                        <div class="form-group">
+                            <img class="img-responsive" src="http://localhost/uploads/image/1.jpg">
+                            <input type="file" class="form-control">
+                            <button type="button" class="btn btn-default wide-btn">上传图片</button>
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox">允许评论 
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-default wide-btn">选择栏目</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div> <!-- ./ first row -->
 
     <?php ActiveForm::end(); ?>

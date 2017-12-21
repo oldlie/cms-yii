@@ -6,3 +6,11 @@
 #categoryListPanel .btn-group { width: 100%; }
 #categoryListPanel .btn-group .root-btn {width: 326px;}
 #categoryListPanel .btn-group .item-btn {width: 300px;}
+
+.wide-btn {
+    width: 100%;
+}
+.short-input-text {
+    border: 1 solid #d2d6de;
+    width: 36px;
+}
