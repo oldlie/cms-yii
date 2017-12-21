@@ -118,3 +118,86 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+/*首页添加*/
+.product-box {
+    border: 1px solid rgb(207, 37, 82);
+}
+.product-bib {
+    overflow: hidden;
+    text-align: center;
+}
+.product-bib .name{
+    font-size: 22px;
+    margin-top: 25px;
+    font-weight: 400;
+    display: block;
+    color: #242424;
+    text-decoration: none;
+}
+.product-bib .infor {
+    font-size: 14px;
+    line-height: 24px;
+    height: 24px;
+    overflow: hidden;
+    color: #666;
+    margin: 0;
+    padding: 0;
+}
+
+.product-bib .btn {
+    color: rgb(255, 255, 255);
+    margin: 10px auto;
+    cursor: pointer;
+    background: #fd5452;
+    border-radius: 2px;
+    width: 160px;
+    height: 44px;
+    line-height: 30px;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+    border: none;
+}
+
+/*News*/
+.fl {
+    float: left;
+}
+.fr {
+    float: right;
+}
+ul, ol, li {
+    list-style: none;
+}
+.article_container{margin-top: 15px;}
+.article_title{height: 42px;line-height: 42px;border-bottom: 1px solid #bfbfbf;}
+.newhot>li{float: left;padding: 0 16px;font-size: 16px;color: #8c8c8c;cursor: pointer;font-weight: bold;}
+.newhot .active{color: #007ae4;border-bottom: 2px solid;}
+.fllist>li{float: left;margin: 0 8px;}
+.fllist>li>a{display: block; font-size: 14px;color: #6a6a6a;font-weight: bold;}
+.fllist>li>a:hover{color: #007ae4;}
+
+.type1_left{width: 70%;}
+.type1_right{width: 30%;max-width: 196px;}
+.type1_right>img{width: 100%;}
+.type1_btm{width: 70%;}
+.type1_btm>div{float: left;margin: 0 2%;color: #666;cursor: pointer;padding: 4px 5px;}
+.yuedu{display: none;}
+/*.type1_btm .shoucang{float:right;}*/
+/*.type1_btm .tips{float:right;}*/
+.type1_btm>div>span{margin-left: 5px;color: #666;}
+.article_type{padding: 20px 0;border-bottom: 1px solid #f2f2f2;}
+.tips{border: 1px solid #bfbfbf;border-radius: 4px;padding: 0 5px;}
+.tips:hover{border: 1px solid #7ecbeb;background: #dcedfb;}
+.type1_left>h1{padding-left: 10px;font-size: 18px;}
+.type1_left>h1>a{color: #030303;}
+.type1_left>h1>a:hover{color: #007AE4;}
+.type1_msg{padding: 20px 0 20px 10px ;color: #666;font-size: 14px;}
+.tipicon{padding: 2px 4px;border-radius: 4px;background: #009847;color: #fff;font-size: 12px;margin-top: 3px;float: left;margin-right: 5px;}
+.tipicon1{padding: 2px 4px;border-radius: 4px;background: #0673d0;color: #fff;font-size: 12px;margin-top: 3px;float: left;margin-right: 5px;}
+.type1_img{margin-top: 20px;width: 100%;}
+.type1_img img{width: 100%;}
+.article_type1 .type1_left{width: 100%;}
