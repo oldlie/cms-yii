@@ -51,8 +51,8 @@ use yii\widgets\ActiveForm;
                         </div>
                         <div class="form-group">
                             <img class="img-responsive" src="http://localhost/uploads/image/1.jpg">
-                            <input type="file" class="form-control">
-                            <button type="button" class="btn btn-default wide-btn">上传图片</button>
+                            <input id="uploadImageFile" type="file" class="form-control">
+                            <button id="uploadImageBtn" type="button" class="btn btn-default wide-btn">上传图片</button>
                         </div>
                         <div class="form-group">
                             <input type="checkbox">允许评论 
@@ -68,14 +68,27 @@ use yii\widgets\ActiveForm;
 
     <?php ActiveForm::end(); ?>
 
+    <?php $form = ActiveForm::begin([
+        'id' => 'posts-image-form',
+        'action' => Url::to(['posts/publish']),
+        'options' => ['enctype' => 'multipart/form-data']
+    ]); ?>
+    <?= $form->field($model, 'imageFile')->fileInput() ?>
+    <?php ActiveForm::end(); ?>
+
+
     <div id="callOut"></div>
 <?php
 $saveNewPostUrl = Url::to(['posts/ajax-save']);
 $updateNewPostUrl = Url::to(['posts/ajax-update']);
+$uploadImaegUrl = Url::to(['posts/ajax-upload-image']);
+$csrf = Yii::$app->request->csrfToken;
 
 $JS_DEF = <<< js
 var saveNewPostUrl = '$saveNewPostUrl';
 var updateNewPostUrl = '$updateNewPostUrl';
+var uploadImaegUrl = '$uploadImaegUrl';
+var csrf = '$csrf';
 js;
 
 $this->registerJs($JS_DEF, \Yii\web\View::POS_BEGIN);

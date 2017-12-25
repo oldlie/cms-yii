@@ -1,8 +1,30 @@
 <?php
+
+/**
+ *                  ___====-_  _-====___
+ *            _--^^^#####//      \\#####^^^--_
+ *         _-^##########// (    ) \\##########^-_
+ *        -############//  |\^^/|  \\############-
+ *      _/############//   (@::@)   \\############\_
+ *     /#############((     \\//     ))#############\
+ *    -###############\\    (oo)    //###############-
+ *   -#################\\  / VV \  //#################-
+ *  -###################\\/      \//###################-
+ * _#/|##########/\######(   /\   )######/\##########|\#_
+ * |/ |#/\#/\#/\/  \#/\##\  |  |  /##/\#/  \/\#/\#/\#| \|
+ * `  |/  V  V  `   V  \#\| |  | |/#/  V   '  V  V  \|  '
+ *    `   `  `      `   / | |  | | \   '      '  '   '
+ *                     (  | |  | |  )
+ *                    __\ | |  | | /__
+ *                   (vvv(VVV)(VVV)vvv)                
+ *                        神兽保佑
+ *                       代码无BUG!
+ */
 namespace backend\controllers;
 
 use Yii;
 use yii\helpers\Url;
+use yii\web\UploadedFile;
 use common\models\User;
 use common\models\Posts;
 use backend\controllers\AcfController;
@@ -10,6 +32,7 @@ use backend\models\PostsForm;
 use backend\models\PostsSearch;
 use backend\models\SystemSettingForm;
 use backend\models\PublishForm;
+use backend\models\PostsImageUploadForm;
 
 class PostsController extends AcfController
 {
@@ -26,7 +49,7 @@ class PostsController extends AcfController
         ]);
     }
 
-    public function actionPublished() 
+    public function actionPublished()
     {
         $request = Yii::$app->request;
         $postsSearch = new PostsSearch();
@@ -54,7 +77,7 @@ class PostsController extends AcfController
         $request = Yii::$app->request;
         if ($request->isPost) {
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            if ($model->load($request->post(), 'PostsForm')){
+            if ($model->load($request->post(), 'PostsForm')) {
                 Yii::trace($request->post());
                 Yii::trace($model);
                 $user = User::findOne(Yii::$app->user->id);
@@ -86,7 +109,7 @@ class PostsController extends AcfController
         if ($request->isPost) {
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
-            if ($model->load($request->post())){
+            if ($model->load($request->post())) {
                 if ($model->update($model->id)) {
                     return ['status' => 0, 'message' => '已保存。', 'id' => $model->id];
                 } else {
@@ -113,8 +136,8 @@ class PostsController extends AcfController
                         return ['status' => 1, 'message' => '已删除。'];
                     }
                 }
-            } 
-            
+            }
+
             return ['status' => 0, 'message' => '没有找到要删除的文章，刷新列表试试。'];
         }
 
@@ -140,5 +163,22 @@ class PostsController extends AcfController
         } else {
             return $this->redirect(['posts/index']);
         }
+    }
+
+    public function actionAjaxUploadImage()
+    {
+        $model = new PostsImageUploadForm();
+        if (Yii::$app->request->isPost) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            Yii::trace('id=' . Yii::$app->request->post('id'));
+            $model->id = Yii::$app->request->post('id');
+            $model->image = UploadedFile::getInstance($model, 'image');
+            if ($model->save()) {
+                return ['status' => 1, 'message' => '已上传。'];
+            } else {
+                return ['status' => 0, 'message' => $model->errors];
+            }
+        }
+        return ['status' => 0, 'message' => '上传失败。'];
     }
 }

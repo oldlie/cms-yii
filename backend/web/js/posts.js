@@ -1,5 +1,6 @@
 $(function () {
     var callout = new CallOut('#callOut');
+    var core = new Core();
     var reg = /(\s|\.)+/g; // 替换空格为短横线
 
     $('#postsform-title').on('change', function () {
@@ -31,5 +32,27 @@ $(function () {
             });
         }
     });
+
+    // region 上传图片
+    $('#uploadImageBtn').on('click', function () {
+        $('#uploadImageBtn').attr('disabled', 'disabled');
+        var formData = new FormData();
+        formData.append('_csrf-backend', csrf);
+        formData.append('id', 1);
+        formData.append('PostsImageUploadForm[image]', document.getElementById('uploadImageFile').files[0]);
+        core.uploadFile(uploadImaegUrl, formData, uploadImageProgerss, uploadImageComplete, null, null);
+    });
+
+    var uploadImageProgerss = function (event) {
+        if (event.lengthComputable) {
+            var percentComplete = Math.round(event.loaded * 100 / event.total);
+            $('#uploadImageBtn').text('正在上传' + percentComplete + '%');
+        }
+    };
+
+    var uploadImageComplete = function (event) {
+        $('#uploadImageBtn').text('上传图片').removeAttr('disabled');
+    }
+    // endregion
 });
 
