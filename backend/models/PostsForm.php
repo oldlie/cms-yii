@@ -4,6 +4,7 @@ namespace backend\models;
 use Yii;
 use common\models\Posts;
 use common\models\WebsiteSystem;
+use common\models\Navigation;
 use backend\models\SystemSettingForm;
 
 class PostsForm extends \yii\base\Model
@@ -22,24 +23,24 @@ class PostsForm extends \yii\base\Model
     public $content;
     public $status;
     public $comment_status;
+    public $category;
 
     public function rules()
     {
         return [
-            [['id', 'author_id', 'publisher_id', 'editor_id'], 'integer'],
+            [['id', 'author_id', 'publisher_id', 'editor_id', 'category'], 'integer', 'message' => '不是整型'],
             [['title', 'slug'], 'required', 'message' => '请填入值。'],
-            [['content'], 'string'],
-            [['title', 'slug', 'image'], 'string', 'max' => 255],
-            [['author', 'publisher', 'editor'], 'string', 'max' => 32],
-            [['author_id', 'publisher_id', 'editor_id', 'status', 'comment_status'], 'integer'],
-            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
+            [['content'], 'string', 'message' => 'string'],
+            [['title', 'slug', 'image'], 'string', 'max' => 255, 'message' => 'string 255'],
+            [['author', 'publisher', 'editor'], 'string', 'max' => 32, 'message' => 'string32'],
+            [['author_id', 'publisher_id', 'editor_id', 'status', 'comment_status'], 'integer', 'message' => 'integer'],
             [['status', 'comment_status'], 'default', 'value' => 0]
         ];
     }
 
     public function find($id)
     {
-        if ( ($model = Posts::findOne($id)) !== null) {
+        if (($model = Posts::findOne($id)) !== null) {
             $this->id = $model->id;
             $this->title = $model->title;
             $this->slug = $model->slug;
@@ -61,17 +62,10 @@ class PostsForm extends \yii\base\Model
     public function update($id)
     {
         if ($this->validate()) {
-            if (($model = Navigation::findOne($id)) !== null) {
-                
+            if (($model = Posts::findOne($id)) !== null) {
                 $model->title = $this->title;
                 $model->slug = $this->slug;
-                $model->author = $this->author;
-                $model->author_id = $this->author_id;
-                $model->publisher = $this->publisher;
-                $model->publisher_id = $this->publisher_id;
-                $model->editor = $this->editor;
-                $model->editor_id = $this->editor_id;
-                $model->image = SystemSettingForm::getImagePath($this->imageFile);
+                $model->image = $this->image;
                 $model->content = $this->content;
                 $model->status = $this->status;
                 $model->comment_status = $this->comment_status;
@@ -85,24 +79,6 @@ class PostsForm extends \yii\base\Model
     {
         if ($this->validate()) {
             Yii::trace('validated.');
-            /*
-            $setting = SystemSettingForm::getSetting();
-
-            if ($this->imageFile) {
-                $path = date('Y') . '/' . date('m');
-                $dir = $setting['upload_path'] . '/' . $path;
-                if (!is_dir($dir)) {
-                    mkdir($dir, '0777', true);
-                }
-                $this->image = $path . '/'
-                    . substr($this->imageFile->baseName, 0, 10) . '_' . time()
-                    . '.'
-                    . $this->imageFile->extension;
-                $this->imageFile->saveAs($setting['upload_path'] . '/' . $this->image);
-            } else {
-                $this->image = '';
-            }
-            */
             $model = new Posts();
             $model->title = $this->title;
             $model->slug = $this->slug;
@@ -112,7 +88,7 @@ class PostsForm extends \yii\base\Model
             $model->publisher_id = $this->publisher_id;
             $model->editor = $this->editor;
             $model->editor_id = $this->editor_id;
-            $model->image = SystemSettingForm::getImagePath($this->imageFile);
+            $model->image = $this->image;
             $model->content = $this->content;
             $model->status = $this->status;
             $model->comment_status = $this->comment_status;
@@ -122,10 +98,17 @@ class PostsForm extends \yii\base\Model
             if ($model->save()) {
                 $this->id = $model->id;
                 return true;
-            } 
+            }
         } else {
             Yii::error($model->errors);
         }
         return false;
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'comment_status' => '是否开启评论',
+        ];
     }
 }

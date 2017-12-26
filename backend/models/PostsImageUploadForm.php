@@ -30,6 +30,7 @@ class PostsImageUploadForm extends \yii\base\Model
 {
     public $id;
     public $image;
+    public $imagePath;
 
     public function rules()
     {
@@ -56,7 +57,11 @@ class PostsImageUploadForm extends \yii\base\Model
                 $model = new PostAttachment();
                 $model->post_id = $this->id;
                 $model->path = $imagePath;    
-                return $model->save();
+                $this->imagePath = $imagePath;
+                if ($this->id > 0) {
+                    return $model->save();
+                }
+                return true;
             }
         }
         return false;

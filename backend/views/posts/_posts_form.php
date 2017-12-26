@@ -7,10 +7,10 @@ use yii\widgets\ActiveForm;
 ?>
 
 <?php $form = ActiveForm::begin([
-        'id' => 'posts-form',
-        'action' => Url::to(['posts/publish']),
-        'options' => ['enctype' => 'multipart/form-data']
-    ]); ?>
+    'id' => 'posts-form',
+    'action' => Url::to(['posts/publish']),
+    'options' => ['enctype' => 'multipart/form-data']
+]); ?>
 
         <div class="row">
             <div class="col-sm-12 col-md-8">
@@ -19,14 +19,14 @@ use yii\widgets\ActiveForm;
                         <h3 class="box-title">写作</h3>
                     </div>
                     <div class="box-body">
-                        <?= $temp = $form->field($model, 'id', ['template' => '{input}'])->hiddenInput()?>
+                        <?= $temp = $form->field($model, 'id', ['template' => '{input}'])->hiddenInput() ?>
                         <?= $form->field($model, 'title')->textInput(['autofocus' => true])->label('标题：') ?>
                         <?= $form->field($model, 'slug', ['template' => '{input}'])->hiddenInput() ?>
-                        <?= $form->field($model, 'content')->widget(\yii\redactor\widgets\Redactor::className(),[
+                        <?= $form->field($model, 'content')->widget(\yii\redactor\widgets\Redactor::className(), [
                             'clientOptions' => [
                                 'imageManagerJson' => ['/redactor/upload/image-json'],
                                 'lang' => 'zh_cn',
-                                'plugins' => ['clips', 'fontcolor','imagemanager'],
+                                'plugins' => ['clips', 'fontcolor', 'imagemanager'],
                                 'minHeight' => 600
                             ]
                         ]) ?>
@@ -46,19 +46,29 @@ use yii\widgets\ActiveForm;
 
                     <div class="box-body">
                         <div class="form-group">
-                            每隔<input type="number" class="short-input-text" value="15">秒自动保存草稿
-                            <button class="btn btn-default">设置</button>
+                            每隔<input id="autoSaveDraftInput" type="number" class="short-input-text" value="15">秒自动保存草稿
+                            <button id="autoSaveDraftBtn" type="button" class="btn btn-default">设置</button>
                         </div>
                         <div class="form-group">
-                            <img class="img-responsive" src="http://localhost/uploads/image/1.jpg">
+                            <?= $form->field($model, 'image', ['template' => '{input}'])->hiddenInput() ?>
+                            <?php
+                            if ($model->image != '') {
+                                echo '<img id="uploadImg" class="img-responsive" src="'. $url . '/' . $model->image . '">';
+                            } else {
+                                echo '<img id="uploadImg" class="img-responsive" src="'. $url .'/uploads/image/1.jpg">';
+                            }
+                            ?>
                             <input id="uploadImageFile" type="file" class="form-control">
                             <button id="uploadImageBtn" type="button" class="btn btn-default wide-btn">上传图片</button>
                         </div>
                         <div class="form-group">
-                            <input type="checkbox">允许评论 
+                            <?=$form->field($model, 'comment_status')->checkbox()?>
                         </div>
                         <div class="form-group">
-                            <button type="button" class="btn btn-default wide-btn">选择栏目</button>
+                            <button type="button" class="btn btn-default wide-btn" data-toggle="modal" data-target="#myModal">选择栏目</button>
+                            当前选择：
+                            <label id="parentTxtLabel">根目录</label>
+                            <?=$form->field($model, 'category', ['template' => '{input}'])->hiddenInput()?>
                         </div>
                     </div>
 
@@ -68,27 +78,52 @@ use yii\widgets\ActiveForm;
 
     <?php ActiveForm::end(); ?>
 
-    <?php $form = ActiveForm::begin([
-        'id' => 'posts-image-form',
-        'action' => Url::to(['posts/publish']),
-        'options' => ['enctype' => 'multipart/form-data']
-    ]); ?>
-    <?= $form->field($model, 'imageFile')->fileInput() ?>
-    <?php ActiveForm::end(); ?>
-
-
     <div id="callOut"></div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">选择上一级分类</h4><small>点击进入子菜单</small>
+      </div>
+      <div class="modal-body" id="categoryListPanel">
+        <div class="btn-group" style="width:100%;">
+            <button type="button" class="btn btn-default root-btn" style="min-width:326px;">根目录</button>
+        </div>
+        
+        <div class="btn-group" style="width:100%;">
+            <button type="button" class="btn btn-default" style="min-width:300px;">Action</button>
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu" role="menu" style="min-width:326px;">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+            </ul>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <?php
 $saveNewPostUrl = Url::to(['posts/ajax-save']);
 $updateNewPostUrl = Url::to(['posts/ajax-update']);
 $uploadImaegUrl = Url::to(['posts/ajax-upload-image']);
-$csrf = Yii::$app->request->csrfToken;
 
 $JS_DEF = <<< js
 var saveNewPostUrl = '$saveNewPostUrl';
 var updateNewPostUrl = '$updateNewPostUrl';
 var uploadImaegUrl = '$uploadImaegUrl';
-var csrf = '$csrf';
 js;
 
 $this->registerJs($JS_DEF, \Yii\web\View::POS_BEGIN);
@@ -105,5 +140,5 @@ $css = <<< css
 .box-body .edui-container {z-index:9000;}
 css;
 $this->registerCss($css);
-*/
+ */
 ?>

@@ -12,6 +12,7 @@ $this->title = 'My Yii Application';
     <!-- Main content -->
     <section class="content">
         <?= $this->render('_posts_form', [
+            'url' => $url,
             'model' => $model
         ]) ?>
     </section> <!-- ./ content -->

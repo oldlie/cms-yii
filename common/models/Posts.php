@@ -69,7 +69,7 @@ class Posts extends \yii\db\ActiveRecord
             'image' => 'Image',
             'content' => 'Content',
             'status' => 'Status',
-            'comment_status' => 'Comment Status',
+            'comment_status' => '是否开启评论',
             'publish_date' => 'Publish Date',
             'view_count' => 'View Count',
             'like_count' => 'Like Count',

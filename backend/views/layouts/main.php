@@ -5,12 +5,23 @@
 
 use backend\assets\AppAsset;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use common\widgets\Alert;
 
 AppAsset::register($this);
+
+$csrf = Yii::$app->request->csrfToken;
+$root = Url::to(['/']);
+
+$JS_HEAD = <<< js
+var csrf = '$csrf';
+var upload = '/uploads/';
+js;
+$this->registerJs($JS_HEAD, \Yii\web\View::POS_BEGIN);
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

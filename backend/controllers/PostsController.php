@@ -64,9 +64,15 @@ class PostsController extends AcfController
 
     public function actionCompose()
     {
+        $request = Yii::$app->request;
+        $id = $request->get('id');
         $model = new PostsForm();
-        $model->title = '';
-        $model->slug = '';
+        if ($id) {
+            $model->find($id);
+        } else {
+            $model->title = '';
+            $model->slug = '';
+        }
         $setting = SystemSettingForm::getSetting();
         return $this->render('compose', ['url' => $setting['upload_url'], 'model' => $model]);
     }
@@ -113,7 +119,7 @@ class PostsController extends AcfController
                 if ($model->update($model->id)) {
                     return ['status' => 0, 'message' => '已保存。', 'id' => $model->id];
                 } else {
-                    return ['status' => 0, 'message' => '保存文章失败。'];
+                    return ['status' => 0, 'message' => '保存文章失败:' . implode(';' ,$model->errors)];
                 }
             } else {
                 return ['status' => 0, 'message' => '数据加载到模型失败。'];
@@ -170,11 +176,10 @@ class PostsController extends AcfController
         $model = new PostsImageUploadForm();
         if (Yii::$app->request->isPost) {
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            Yii::trace('id=' . Yii::$app->request->post('id'));
             $model->id = Yii::$app->request->post('id');
             $model->image = UploadedFile::getInstance($model, 'image');
             if ($model->save()) {
-                return ['status' => 1, 'message' => '已上传。'];
+                return ['status' => 1, 'message' => '已上传。', 'image' => $model->imagePath];
             } else {
                 return ['status' => 0, 'message' => $model->errors];
             }
