@@ -12,6 +12,7 @@ class m171107_125701_create_posts extends Migration
             'id' => $this->primaryKey(),
             'title' => $this->string()->notNull(),
             'slug' => $this->string(),
+            'abstract' => $this->string(),
             'author' => $this->string(32)->notNull(),
             'author_id' => $this->integer(),
             'publisher' => $this->string(32),

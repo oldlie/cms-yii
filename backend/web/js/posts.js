@@ -2,7 +2,7 @@ $(function () {
     var callout = new CallOut('#callOut');
     var core = new Core();
     var reg = /(\s|\.)+/g; // 替换空格为短横线
-    var autoSaveTime = 150000;
+    var autoSaveTime = 15000;
 
     $('#postsform-title').on('change', function () {
         var text = $(this).val();
@@ -11,14 +11,24 @@ $(function () {
 
     // region auto save
     var autoSaveCount = 0;
-    var autoSaveInterval = setInterval(function (){
+    var autoSaveInterval = setInterval(function () {
         console.log('AutoSaveCount:', autoSaveCount++);
-        saveDraft();
-    }, autoSaveTime );
+        const promise = saveDraft();
+        if (promise != null) {
+            promise.then(x => {
+                if (x['status'] === 0) {
+                    callout.success('已保存。');
+                } else {
+                    callout.warning(x['message']);
+                }
+            });
+        }
+       
+    }, autoSaveTime);
 
     $('#autoSaveDraftBtn').on('click', function () {
         if (autoSaveInterval) {
-            autoSaveTime =(+$('#autoSaveDraftInput').val()) * 1000;
+            autoSaveTime = (+$('#autoSaveDraftInput').val()) * 1000;
             console.log(autoSaveTime);
             clearInterval(autoSaveInterval);
 
@@ -34,35 +44,31 @@ $(function () {
         console.log('save draft id:', id);
         if (title.replace(/(^\s)|(\s$)/g, '') === '') {
             console.log('no title');
-            return;
+            return null;
         }
         var data = {
             '_csrf-backend': csrf,
-            'PostsForm[id]' : $('#postsform-id').val(),
-            'PostsForm[title]' : $('#postsform-title').val(),
-            'PostsForm[slug]' : $('#postsform-slug').val(),
-            'PostsForm[content]' : $('#postsform-content').val(),
-            'PostsForm[image]' : $('#postsform-image').val(),
-            'PostsForm[comment_status]' : $('#postsform-comment_status').val()
+            'PostsForm[id]': $('#postsform-id').val(),
+            'PostsForm[title]': $('#postsform-title').val(),
+            'PostsForm[slug]': $('#postsform-slug').val(),
+            'PostsForm[abstract]': $('#postsform-abstract').val(),
+            'PostsForm[content]': $('#postsform-content').val(),
+            'PostsForm[image]': $('#postsform-image').val(),
+            'PostsForm[comment_status]': $('#postsform-comment_status').val()
         };
-        if (id) { // update
-            $.post(updateNewPostUrl, data, function(data) {
-                if (data['status'] === 1) {
-                    callout.success('已保存。');
-                } else {
-                    callout.warning(data['message']);
-                }
-            });
-        } else { // save
-            $.post(saveNewPostUrl, data, function(data) {
-                if (data['status'] === 1) {
-                    $('#postsform-id').val(data['id'])
-                    callout.success('已保存。');
-                } else {
-                    callout.warning(data['message']);
-                }
-            });
-        }
+        let promise = new Promise((resolve, reject) => {
+            if (id) {
+                $.post(updateNewPostUrl, data, function (data) {
+                    resolve(data);
+                });
+            } else {
+                $.post(saveNewPostUrl, data, function (data) {
+                    resolve(data);
+                });
+            }
+        });
+        return promise;
+        // }
     };
     // endregion
 
@@ -97,23 +103,23 @@ $(function () {
     // endregion
 
     // region Navigation
-    var rootHtmlTemp = 
-    '<div class="btn-group">' +
-    '<button type="button" class="btn btn-default root-btn" data-id="@{id}" data-parent="@{parent}">@{text}</button>' +
-    '</div>';
-    var itemHtmlTemp = 
-    '<div class="btn-group">' +
-    '<button type="button" class="btn btn-default item-btn" data-id="@{id}">@{text}</button>' +
-    '<button type="button" class="btn btn-default dropdown-toggle child-btn" data-toggle="dropdown" @{disabled} data-id="@{id}" data-parent="@{parent}" data-text="@{text}"> ' +
-    '<span class="caret"></span>' +
-    '<span class="sr-only">Toggle Dropdown</span> '+
-    '</button>' +
-    '</div>';
+    var rootHtmlTemp =
+        '<div class="btn-group">' +
+        '<button type="button" class="btn btn-default root-btn" data-id="@{id}" data-parent="@{parent}">@{text}</button>' +
+        '</div>';
+    var itemHtmlTemp =
+        '<div class="btn-group">' +
+        '<button type="button" class="btn btn-default item-btn" data-id="@{id}">@{text}</button>' +
+        '<button type="button" class="btn btn-default dropdown-toggle child-btn" data-toggle="dropdown" @{disabled} data-id="@{id}" data-parent="@{parent}" data-text="@{text}"> ' +
+        '<span class="caret"></span>' +
+        '<span class="sr-only">Toggle Dropdown</span> ' +
+        '</button>' +
+        '</div>';
     var currentId = 0;
 
     var bindEvent = function () {
         $('.item-btn').bind('click', function () {
-            $('#categoryform-parent').val($(this).attr('data-id'));
+            $('#postsform-category').val($(this).attr('data-id'));
             $('#parentTxtLabel').html($(this).text());
             $('#myModal').modal('hide');
         });
@@ -140,10 +146,10 @@ $(function () {
             console.log(data);
             let html = '';
             if (currentId === 0) {
-                html = core.html(rootHtmlTemp, {id: 0, parent: 0, text: '根目录'});
+                html = core.html(rootHtmlTemp, { id: 0, parent: 0, text: '根目录' });
             } else {
                 let item = data.item;
-                html = core.html(rootHtmlTemp, {id: item['id'], parent: item['parent'], text: item['title']});
+                html = core.html(rootHtmlTemp, { id: item['id'], parent: item['parent'], text: item['title'] });
             }
             for (let i = 0; i < data.list.length; i++) {
                 let item = data.list[i];
@@ -167,5 +173,23 @@ $(function () {
     loadData();
     // endregion
 
+    // region publish
+    $('#publishBtn').on('click', function () {
+        const menuId = $('#postsform-category').val();
+        if (menuId) {
+            const promise = saveDraft();
+            promise.then(x => {
+                if (x['status'] === 0) {
+                    $('#posts-form').submit();
+                } else {
+                    callout.error(x['message']);
+                }
+            });
+        } else {
+            callout.warning('请选择文章所在栏目。');
+        }
+    });
+    // endregion
 });
+
 

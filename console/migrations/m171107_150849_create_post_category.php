@@ -12,6 +12,7 @@ class m171107_150849_create_post_category extends Migration
             'id' => $this->primaryKey(),
             'navigation_id' => $this->integer()->notNull()->comment('导航栏目ID'),
             'post_id' => $this->integer()->notNull()->comment('文章ID'),
+            'post_title' => $this->string()->notNull()->comment('上一篇文章标题'),
             'prev_id' => $this->integer()->defaultValue(0)->comment('上一篇文章ID'),
             'prev_title' => $this->string()->comment('上一篇文章标题'),
             'next_id' => $this->integer()->defaultValue(0)->comment('下一篇文章ID'),

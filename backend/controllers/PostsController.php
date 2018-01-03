@@ -74,7 +74,8 @@ class PostsController extends AcfController
             $model->slug = '';
         }
         $setting = SystemSettingForm::getSetting();
-        return $this->render('compose', ['url' => $setting['upload_url'], 'model' => $model]);
+        return $this->render('compose', ['url' => $setting['upload_url'], 
+        'model' => $model]);
     }
 
     public function actionAjaxSave()
@@ -119,7 +120,7 @@ class PostsController extends AcfController
                 if ($model->update($model->id)) {
                     return ['status' => 0, 'message' => '已保存。', 'id' => $model->id];
                 } else {
-                    return ['status' => 0, 'message' => '保存文章失败:' . implode(';' ,$model->errors)];
+                    return ['status' => 0, 'message' => '保存文章失败:' . implode(';', $model->errors)];
                 }
             } else {
                 return ['status' => 0, 'message' => '数据加载到模型失败。'];
@@ -152,23 +153,16 @@ class PostsController extends AcfController
 
     public function actionPublish()
     {
-        $request = Yii::$app->request;
-        $id = $request->get('id');
-        if ($id) {
-            $post = Posts::findOne($id);
-            $model = new PublishForm();
-            $model->id = $id;
-            $model->title = $post->title;
-            $model->image = '';
-            $model->imageFile = '';
-            $model->categoryId = 0;
-            $model->allowComment = 0;
-            return $this->render('publish', [
-                'model' => $model,
-            ]);
-        } else {
-            return $this->redirect(['posts/index']);
+        $model = new PostsForm();
+        if ($model->load(Yii::$app->request->post()) && $model->publish()) {
+            // posts/published
+            $model->find($model->id);
+            $model->status = 1;
+            if ($model->update($model->id)) {
+                return $this->redirect(Url::to(['posts/published']));
+            }
         }
+        return $this->redirect(Url::to(['posts/index']));
     }
 
     public function actionAjaxUploadImage()

@@ -15,13 +15,14 @@ use yii\widgets\ActiveForm;
         <div class="row">
             <div class="col-sm-12 col-md-8">
                 <div class="box box-default">
-                    <div class="box-header">
+                    <div class="box-header with-border">
                         <h3 class="box-title">写作</h3>
                     </div>
                     <div class="box-body">
                         <?= $temp = $form->field($model, 'id', ['template' => '{input}'])->hiddenInput() ?>
                         <?= $form->field($model, 'title')->textInput(['autofocus' => true])->label('标题：') ?>
                         <?= $form->field($model, 'slug', ['template' => '{input}'])->hiddenInput() ?>
+                        <?= $form->field($model, 'abstract')->textarea() ?>
                         <?= $form->field($model, 'content')->widget(\yii\redactor\widgets\Redactor::className(), [
                             'clientOptions' => [
                                 'imageManagerJson' => ['/redactor/upload/image-json'],
@@ -33,7 +34,7 @@ use yii\widgets\ActiveForm;
                     </div><!-- ./box-body -->
                     <div class="box-footer">
                         <?= Html::button('保存草稿', ['id' => 'saveDraftBtn', 'class' => 'btn btn-default']) ?>
-                        <?= Html::submitButton('发布', ['class' => 'btn btn-primary']) ?>
+                        <?= Html::button('发布文章', ['id' => 'publishBtn', 'class' => 'btn btn-primary']) ?>
                     </div>
                 </div>
             </div> <!-- ./ col-md-8 -->
@@ -55,7 +56,7 @@ use yii\widgets\ActiveForm;
                             if ($model->image != '') {
                                 echo '<img id="uploadImg" class="img-responsive" src="'. $url . '/' . $model->image . '">';
                             } else {
-                                echo '<img id="uploadImg" class="img-responsive" src="'. $url .'/uploads/image/1.jpg">';
+                                echo '<img id="uploadImg" class="img-responsive" src="'. $url .'/image/1.jpg">';
                             }
                             ?>
                             <input id="uploadImageFile" type="file" class="form-control">
@@ -67,7 +68,7 @@ use yii\widgets\ActiveForm;
                         <div class="form-group">
                             <button type="button" class="btn btn-default wide-btn" data-toggle="modal" data-target="#myModal">选择栏目</button>
                             当前选择：
-                            <label id="parentTxtLabel">根目录</label>
+                            <label id="parentTxtLabel"><?=$model->category_text?></label>
                             <?=$form->field($model, 'category', ['template' => '{input}'])->hiddenInput()?>
                         </div>
                     </div>
@@ -87,26 +88,7 @@ use yii\widgets\ActiveForm;
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">选择上一级分类</h4><small>点击进入子菜单</small>
       </div>
-      <div class="modal-body" id="categoryListPanel">
-        <div class="btn-group" style="width:100%;">
-            <button type="button" class="btn btn-default root-btn" style="min-width:326px;">根目录</button>
-        </div>
-        
-        <div class="btn-group" style="width:100%;">
-            <button type="button" class="btn btn-default" style="min-width:300px;">Action</button>
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                <span class="caret"></span>
-                <span class="sr-only">Toggle Dropdown</span>
-            </button>
-            <ul class="dropdown-menu" role="menu" style="min-width:326px;">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-            </ul>
-        </div>
-      </div>
+      <div class="modal-body" id="categoryListPanel"></div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary">Save changes</button>
