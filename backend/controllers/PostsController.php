@@ -27,6 +27,8 @@ use yii\helpers\Url;
 use yii\web\UploadedFile;
 use common\models\User;
 use common\models\Posts;
+use common\models\PostCategory;
+use common\models\PostAttachment;
 use backend\controllers\AcfController;
 use backend\models\PostsForm;
 use backend\models\PostsSearch;
@@ -137,6 +139,30 @@ class PostsController extends AcfController
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             $id = $request->post('id');
             if ($id) {
+                $setting = SystemSettingForm::getSetting();
+                $attachments = PostAttachment::find()->where(['post_id' => $id])->all();
+                foreach($attachments as $attachment) {
+                    // upload_path
+                    $path = file_exists($setting['upload_path'] . '/'. $attachment->path);
+                    if ($path) {
+                        unlink($path);
+                    }
+                    $attachment->delete();
+                }
+
+                $menus = PostCategory::find()->where(['post_id' => $id])->all();
+                foreach($menus as $menu) {
+                    $prev = PostCategory::find()->where(['post_id' => $menu->prev_id, 'navigation_id' => $menu->navigation_id])->one();
+                    $next = PostCategory::find()->where(['post_id' => $menu->next_id, 'navigation_id' => $menu->navigation_id])->one();
+                    $prev->next_id = $next->post_id;
+                    $prev->next_title = $next->post_title;
+                    $next->prev_id = $prev->post_id;
+                    $next->prev_title = $prev->post_title;
+                    $prev->save();
+                    $next->save();
+                    $menu->delete();
+                }
+
                 $model = Posts::findOne($id);
                 if ($model) {
                     if ($model->delete()) {

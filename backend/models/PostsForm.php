@@ -157,6 +157,9 @@ class PostsForm extends \yii\base\Model
         if ($latestPostsCate) {
             $myCate->next_id = $latestPostsCate->post_id;
             $myCate->next_title = $latestPostsCate->post_title;
+            $latestPostsCate->prev_id = $myCate->post_id;
+            $latestPostsCate->prev_title = $myCate->post_title;
+            $latestPostsCate->save();
         } else {
             $myCate->next_id = 0;
             $myCate->next_title = '';

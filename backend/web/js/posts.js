@@ -63,6 +63,7 @@ $(function () {
                 });
             } else {
                 $.post(saveNewPostUrl, data, function (data) {
+                    $('#postsform-id').val(data['id']);
                     resolve(data);
                 });
             }
