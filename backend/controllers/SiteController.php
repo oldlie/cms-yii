@@ -140,4 +140,12 @@ class SiteController extends AcfController
         return $this->render('system_setting', ['model' => $model]);
         
     }
+
+    /**
+     * 前台首页设置
+     */
+    public function actionFrontIndex()
+    {
+        return $this->render('front_index');
+    }
 }

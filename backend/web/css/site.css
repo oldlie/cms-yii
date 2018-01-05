@@ -14,3 +14,47 @@
     border: 1 solid #d2d6de;
     width: 36px;
 }
+
+/*前端首页添加*/
+.product-box {
+    border: 1px solid rgb(207, 37, 82);
+}
+.product-bib {
+    overflow: hidden;
+    text-align: center;
+}
+.product-bib .name{
+    font-size: 22px;
+    margin-top: 25px;
+    font-weight: 400;
+    display: block;
+    color: #242424;
+    text-decoration: none;
+    white-space: nowrap;
+}
+.product-bib .infor {
+    font-size: 14px;
+    line-height: 24px;
+    height: 24px;
+    overflow: hidden;
+    color: #666;
+    margin: 0;
+    padding: 0;
+}
+
+.product-bib .btn {
+    color: rgb(255, 255, 255);
+    margin: 10px auto;
+    cursor: pointer;
+    background: #fd5452;
+    border-radius: 2px;
+    width: 160px;
+    height: 44px;
+    line-height: 30px;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+    border: none;
+}
