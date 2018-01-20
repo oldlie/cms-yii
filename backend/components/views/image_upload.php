@@ -38,7 +38,7 @@ $this->registerJsFile('@web/js/file.js', ['depends' => 'backend\assets\AppAsset'
         </div>
         <input id="<?=$fileInputId?>" type="file" class="form-control" id="image_file">
     </div>
-    <input type="hidden" id="<?=$imagePathId?>" class="form-control" name="<?=$name?>" value="<?= $path ?>">
+    <input type="hidden" id="<?=$imagePathId?>" class="form-control" name="<?=$name?>" value="">
     <div class="help-block"></div>
 </div>
 <div class="row" style="margin-bottom:10px;">
@@ -46,7 +46,7 @@ $this->registerJsFile('@web/js/file.js', ['depends' => 'backend\assets\AppAsset'
         <div class="form-group">
             
             <div class="col-sm-12 col-md-6">
-                <img id="<?=$imageId?>" src="<?=$url . $path?>" class="img-responsive" alt="Responsive image">
+                <img id="<?=$imageId?>" src="<?=$url . '/' . $path?>" class="img-responsive" alt="Responsive image">
             </div>
         </div>
     </div>

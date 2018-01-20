@@ -23,13 +23,14 @@ class TagForm extends Model
     public $file_path;
     public $parent_id = 0;
     public $parent_text = '根标签';
+    private $model;
 
     public function rules()
     {
         return [
             [['id', 'parent_id'], 'integer'],
             [['text'], 'required', 'message' => '名称不可以省略。'],
-            [['icon', 'file_path'], 'string', 'max' => 255]
+            [['icon', 'file_path', 'parent_text'], 'string', 'max' => 255]
         ];
     }
 
@@ -42,7 +43,63 @@ class TagForm extends Model
             $this->file_path = $model->t_icon_file;
             $this->parent_id = $model->parent_id;
             $this->parent_text = $model->parent_text;
+            $this->model = $model;
             return true;
+        }
+        return false;
+    }
+
+    public function count($parentId)
+    {
+        return TagModel::find()->where(['parent_id' => $parentId])->count();
+    }
+
+    public function delete($id)
+    {
+        if ($this->find($id)) {
+            if ($this->count($this->id) > 0) {
+                $this->addError('hasChild', '删除标签之前请先删除或者移动本页面的子标签。');
+                return false;
+            }
+            $setting = SystemSettingForm::getSetting();
+            if ($this->file_path) {
+                $file = $setting['upload_path'] . '/' . $this->file_path;
+                if (file_exists($file)) {
+                    unlink($file);
+                }
+            }
+
+            return $this->model->delete();
+        }
+        return false;
+    }
+
+    public function save()
+    {
+        if ($this->validate()) {
+            $model = new TagModel();
+            $model->t_text = $this->text;
+            $model->t_icon = $this->icon;
+            $model->t_icon_file = $this->file_path;
+            $model->parent_id = $this->parent_id;
+            $model->parent_text = $this->parent_text;
+            return $model->save();
+        }
+        return false;
+    }
+
+    public function update($id)
+    {
+        if ($this->validate()) {
+            if (($model = TagModel::findOne($id)) !== null) {
+                $model->t_text = $this->text;
+                if ($this->file_path && $this->file_path != '') {
+                    $model->t_icon_file = $this->file_path;
+                }
+                $model->parent_id = $this->parent_id;
+                $model->parent_text = $this->parent_text;
+                return $model->save();
+            }
         }
         return false;
     }

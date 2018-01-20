@@ -33,7 +33,7 @@ class MainSidebar extends Widget {
             ],
             ['id' => 300, 'name' => '品类与提货单', 'icon' => 'fa fa-opencart',  'url' => '#',
                 'children' => [
-                    ['id' => 301, 'name' => '标签列表', 'url' => Url::to(['tag/index'])],
+                    ['id' => 301, 'name' => '标签列表', 'url' => Url::to(['tag/index', 'id' => 0])],
                     ['id' => 302, 'name' => '添加品类', 'url' => Url::to(['tag/create'])],
                     ['id' => 303, 'name' => '货单管理', 'url' => Url::to(['order/index'])],
                     ['id' => 304, 'name' => '优惠券', 'url' => Url::to(['coupom/index'])],
