@@ -21,6 +21,7 @@ $(function () {
     var load = function(id) {
         var url = load_url.replace('&id=0', '&id=' + id);
         $.get(url, function (json) {
+            
             let html = '';
             if (json['status'] === 1 && json['list'].length > 0) {
                 if (id == 0) {
@@ -56,6 +57,8 @@ $(function () {
                 $('#tag_table').html(html);
                 buildBreadcrumb();
                 bindEvents();
+            } else {
+                breadcrumb.pop();
             }
         });
     };
@@ -75,21 +78,25 @@ $(function () {
                 text: $(this).attr('data-value'),
                 parent_id: $(this).attr('data-parent')
             });
+            console.log(breadcrumb);
             load(id);
         });
         $('.bc-check').on('click', function () {
             const id = $(this).attr('data-id');
             let find = false;
-            for (let i = 0; i < breadcrumb.length; i++) {
+            let length = breadcrumb.length;
+            let temp = [];
+            for (let i = 0; i < length; i++) {
                 const item = breadcrumb[i];
+                temp.push(item);
                 if (id == item.id) {
                     find = true;
                 }
                 if (find) {
-                    breadcrumb.pop();
+                    break;
                 }
             }
-            console.log(breadcrumb.length);
+            breadcrumb = temp;
             load(id);
         });
     };    
