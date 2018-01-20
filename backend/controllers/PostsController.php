@@ -194,8 +194,8 @@ class PostsController extends AcfController
     public function actionAjaxUploadImage()
     {
         $model = new PostsImageUploadForm();
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         if (Yii::$app->request->isPost) {
-            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             $model->id = Yii::$app->request->post('id');
             $model->image = UploadedFile::getInstance($model, 'image');
             if ($model->save()) {

@@ -26,6 +26,10 @@ use Yii;
 use backend\models\SystemSettingForm;
 use common\models\PostAttachment;
 
+/**
+ * 
+ * 
+ */
 class PostsImageUploadForm extends \yii\base\Model
 {
     public $id;

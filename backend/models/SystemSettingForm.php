@@ -33,13 +33,13 @@ class SystemSettingForm extends Model
     {
         // $query = WebsiteSystem::find()->where(['id', 1]);
         // $depndence = new \yii\caching\DbDependency(['sql' => $query->sql]);
-
-        return Yii::$app->cache->getOrSet(
-            'setting',
-            function () {
-                return WebsiteSystem::findOne(1);
-            }
-        );
+        return WebsiteSystem::findOne(1);
+        // return Yii::$app->cache->getOrSet(
+        //     'setting',
+        //     function () {
+        //         return WebsiteSystem::findOne(1);
+        //     }
+        // );
     }
 
     public static function getImagePath($imageFile) 
@@ -89,9 +89,9 @@ class SystemSettingForm extends Model
             $model->satic_path = $this->satic_path;
             if ($model->save()) {
                 // 更新缓存
-                Yii::$app->cache->set('setting', function () {
-                    return WebsiteSystem::findOne(1);
-                });
+                // Yii::$app->cache->set('setting', function () {
+                //     return WebsiteSystem::findOne(1);
+                // });
                 return true;
             } else {
                 return false;

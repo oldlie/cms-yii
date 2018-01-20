@@ -69,6 +69,16 @@ var Core = (function () {
         xhr.send(formData);
     }
 
+    Core.prototype.uploadImageFile = function (url, jqID, fileCtlID, progress, complete) {
+        $(jqID).on('click', function () {
+            $(jqID).attr('disabled', 'disabled');
+            var formData = new FormData();
+            formData.append('_csrf-backend', csrf);
+            formData.append('FileForm[image]', document.getElementById(fileCtlID).files[0]);
+            this.uploadFileuploadFile(url, formData, progress, complete, null, null);
+        });
+    }
+
     return Core;
 })();
 
