@@ -10,7 +10,7 @@ $this->title = 'Tag List';
 ?>
 
 <div class="content-wrapper" >
-    <?= MainSidebar::widget(['active_menu' => 301]); ?>
+    <?= MainSidebar::widget(['active_menu' => 601]); ?>
 
     <!-- Content Header (Page header) -->
     <section class="content-header">

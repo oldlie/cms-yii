@@ -27,7 +27,7 @@ use yii\helpers\Url;
 use backend\models\TagForm;
 use common\models\TagModel;
 
-class TagController extends \yii\web\Controller
+class TagController extends AcfController
 {
     public function actionIndex($id = 0, $message = null)
     {

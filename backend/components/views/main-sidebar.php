@@ -30,7 +30,8 @@
                         echo '<li class="treeview ' . $cssClass . '">'
                             . '<a href="#">' 
                             . '<i class="' . $value['icon'] . '"></i>'
-                            . '<span>'. $value['name'] . '</span>'
+                            . '  <span>'. $value['name'] . '</span>'
+                            . '<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>'
                             . '</a>'
                             . '<ul class="treeview-menu">' . $child_html . '</ul>'
                          . '</li>';

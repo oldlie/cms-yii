@@ -9,7 +9,7 @@ $this->title = 'Tag Create';
 
 <div class="content-wrapper" >
 
-    <?= MainSidebar::widget(['active_menu' => 302]); ?>
+    <?= MainSidebar::widget(['active_menu' => 602]); ?>
 
     <!-- Content Header (Page header) -->
     <section class="content-header">
