@@ -12,8 +12,6 @@ use yii\widgets\ActiveForm;
 
         <?= $form->field($model, 'name') ?>
         <?= $form->field($model, 'short_des') ?>
-        <?= $form->field($model, 'price') ?>
-        <?= $form->field($model, 'inventory') ?>
         <?= $form->field($model, 'description') ?>
         <?= $form->field($model, 'warning_info')->widget(\yii\redactor\widgets\Redactor::className(), [
             'clientOptions' => [

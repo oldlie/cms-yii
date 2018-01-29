@@ -41,8 +41,8 @@ class MainSidebar extends Widget {
                 'children' => [
                     ['id' => 301, 'name' => '商品列表', 'url' => Url::to(['cargo/index'])],
                     ['id' => 302, 'name' => '添加商品', 'url' => Url::to(['cargo/create'])],
-                    ['id' => 303, 'name' => '规格列表', 'url' => Url::to(['spec/index'])],
-                    ['id' => 304, 'name' => '规格列表', 'url' => Url::to(['spec/create'])],
+                    ['id' => 303, 'name' => '食品规格列表', 'url' => Url::to(['foodspec/index'])],
+                    ['id' => 304, 'name' => '添加食品规格', 'url' => Url::to(['foodspec/create'])],
                 ]
             ],
             ['id' => 400, 'name' => '栏目与资讯', 'icon' => 'fa fa-navicon',  'url' => '#',

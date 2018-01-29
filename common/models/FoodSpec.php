@@ -17,6 +17,8 @@ use Yii;
  * @property string $store
  * @property string $product_datetime
  * @property string $quota_policy
+ * @property integer $price
+ * @property integer $inventory
  */
 class FoodSpec extends \yii\db\ActiveRecord
 {
@@ -34,7 +36,7 @@ class FoodSpec extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cargo_id'], 'integer'],
+            [['cargo_id', 'price', 'inventory'], 'integer'],
             [['name', 'category', 'origin', 'feature', 'spec', 'store', 'product_datetime', 'quota_policy'], 'string', 'max' => 255],
         ];
     }

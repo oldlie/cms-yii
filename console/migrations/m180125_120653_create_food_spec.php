@@ -17,7 +17,9 @@ class m180125_120653_create_food_spec extends Migration
             'spec' => $this->string()->comment('规格'),
             'store' => $this->string()->comment('存储方式'),
             'product_datetime' => $this->string()->comment('生产日期'),
-            'quota_policy' => $this->string()->comment('限购策略')
+            'quota_policy' => $this->string()->comment('限购策略'),
+            'price' => $this->integer()->comment('价格'),
+            'inventory' => $this->integer()->comment('库存')
         ], $tableOptions);
     }
 

@@ -11,8 +11,6 @@ use Yii\base\Model;
  * @property integer $id
  * @property string $name
  * @property string $short_des
- * @property integer $price
- * @property integer $inventory
  * @property string $warning_info
  * @property string $description
  */
@@ -20,8 +18,6 @@ class CargoForm extends Model
 {
     public $name;
     public $short_des;
-    public $price;
-    public $inventory;
     public $warning_info;
     public $description;
 
@@ -32,7 +28,6 @@ class CargoForm extends Model
     public function rules()
     {
         return [
-            [['price', 'inventory'], 'integer'],
             [['description'], 'string'],
             [['name', 'short_des', 'warning_info'], 'string', 'max' => 255],
         ];
