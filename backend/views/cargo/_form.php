@@ -12,8 +12,8 @@ use yii\widgets\ActiveForm;
 
         <?= $form->field($model, 'name') ?>
         <?= $form->field($model, 'short_des') ?>
-        <?= $form->field($model, 'description') ?>
-        <?= $form->field($model, 'warning_info')->widget(\yii\redactor\widgets\Redactor::className(), [
+        <?= $form->field($model, 'warning_info') ?>
+        <?= $form->field($model, 'description')->widget(\yii\redactor\widgets\Redactor::className(), [
             'clientOptions' => [
                 'imageManagerJson' => ['/redactor/upload/image-json'],
                 'lang' => 'zh_cn',

@@ -22,7 +22,7 @@ class UserForm extends \yii\base\Model
         ];
     }
 
-    public function find($id) 
+    public function find($id)
     {
         if (($model = User::findOne($id)) !== null) 
         {

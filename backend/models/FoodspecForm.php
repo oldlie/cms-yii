@@ -20,7 +20,7 @@ use Yii\base\Model;
  * @property integer $inventory 库存
  */
 
-class CargoForm extends Model
+class FoodspecForm extends Model
 {
     public $cargo_id;
     public $name;
