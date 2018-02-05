@@ -6,6 +6,7 @@ use Yii;
 use backend\controllers\AcfController;
 use backend\models\CargoForm;
 use backend\models\CargoSearch;
+use common\models\Cargo;
 
 
 /**
@@ -50,6 +51,15 @@ class CargoController extends AcfController
             return $this->redirect(['index']);
         } 
         return $this->render('create', ['model' => $model]);
+    }
+
+    public function actionDelete($id)
+    {
+        $model = Cargo::findOne($id);
+        if ($model != null) {
+            $model->delete();
+        }
+        return $this->redirect(['index']);
     }
 
     public function actionUpdate()

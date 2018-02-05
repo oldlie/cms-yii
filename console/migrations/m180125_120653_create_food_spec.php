@@ -11,7 +11,7 @@ class m180125_120653_create_food_spec extends Migration
             'id' => $this->primaryKey(),
             'cargo_id' => $this->integer()->comment('商品ID'),
             'name' => $this->string()->comment('规格名称'),
-            'category' => $this->string()->comment('品种'),
+            'breed' => $this->string()->comment('品种'),
             'origin' => $this->string()->comment('产地'),
             'feature' => $this->string()->comment('特征'),
             'spec' => $this->string()->comment('规格'),
