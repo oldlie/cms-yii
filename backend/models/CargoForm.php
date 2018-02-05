@@ -80,6 +80,7 @@ class CargoForm extends Model
         return false;
     }
 
+
     /**
      * @inheritdoc
      */

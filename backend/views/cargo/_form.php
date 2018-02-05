@@ -10,6 +10,12 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
+        <?php
+        if ($model->id > 0) {
+            return $form->input($model, 'name')->hide();
+        }
+        ?>
+
         <?= $form->field($model, 'name') ?>
         <?= $form->field($model, 'short_des') ?>
         <?= $form->field($model, 'warning_info') ?>
