@@ -1,5 +1,27 @@
 <?php
 
+/**
+ * Created by 神兽 on 2017/12/15.
+ * ━━━━━━神兽出没━━━━━━
+ * 　　　┏┓　　　┏┓
+ * 　　┏┛┻━━━┛┻┓
+ * 　　┃　　　　　　　┃
+ * 　　┃　　　━　　　┃
+ * 　　┃　┳┛　┗┳　┃
+ * 　　┃　　　　　　　┃
+ * 　　┃　　　┻　　　┃
+ * 　　┃　　　　　　　┃
+ * 　　┗━┓　　　┏━┛
+ * 　　　　┃　　　┃  神兽保佑
+ * 　　　　┃　　　┃  代码无bug
+ * 　　　　┃　　　┗━━━┓
+ * 　　　　┃　　　　　　　┣┓
+ * 　　　　┃　　　　　　　┏┛
+ * 　　　　┗┓┓┏━┳┓┏┛
+ * 　　　　　┃┫┫　┃┫┫
+ * 　　　　　┗┻┛　┗┻┛
+ * ━━━━━━━━━━━━━━━━━
+ */
 namespace backend\models;
 
 use Yii;
@@ -15,9 +37,8 @@ class CargoSearch extends Cargo
     public function rules()
     {
         return [
-            [['id', 'status'], 'integer'],
-            [['description'], 'string'],
-            [['name', 'short_des', 'warning_info'], 'string', 'max' => 255],
+            [['id'], 'integer'],
+            [['name'], 'string', 'max' => 255],
         ];
     }
 

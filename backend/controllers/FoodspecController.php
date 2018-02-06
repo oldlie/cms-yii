@@ -4,8 +4,8 @@ namespace backend\controllers;
 
 use Yii;
 use backend\controllers\AcfController;
-use backend\models\CargoForm;
 use backend\models\FoodspecForm;
+use backend\models\FoodspecSearch;
 
 /**
  * Site controller
@@ -14,7 +14,23 @@ class FoodspecController extends AcfController
 {
     public function actionIndex()
     {
-        return $this->render('index');
+        $searchModel = new FoodspecSearch();
+        $query = $dataProvider->query;
+
+        $pagination = new Pagination([
+            'defaultPageSize' => 10,
+            'totalCount' => $query->count()
+        ]);
+
+        $list = $query->orderBy('id asc')
+            ->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+
+        return $this->render('index', [
+            'pagination' => $pagination,
+            'list' => $list
+        ]);
     }
 
     public function actionCreate()
