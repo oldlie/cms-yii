@@ -30,8 +30,8 @@ class Carousel extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 't'], 'integer'],
-            [['seq', 'image_url', 'url'], 'string', 'max' => 255],
+            [['seq', 't'], 'integer'],
+            [['title', 'image_url', 'url'], 'string', 'max' => 255],
         ];
     }
 
