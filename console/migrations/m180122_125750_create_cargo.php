@@ -13,6 +13,7 @@ class m180122_125750_create_cargo extends Migration
             'short_des' => $this->string()->comment('短描述，HTML'),
             'warning_info' => $this->string()->comment('注意事项'),
             'description' => $this->text()->comment('图文描述HTML'),
+            'status' => $this->integer()->comment('商品上架状态'),
         ], $tableOptions);
     }
 

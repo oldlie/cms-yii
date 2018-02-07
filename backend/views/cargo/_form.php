@@ -12,13 +12,19 @@ use yii\widgets\ActiveForm;
 
         <?php
         if ($model->id > 0) {
-            return $form->input($model, 'name')->hide();
+            echo $form->field($model, 'id')->label('')->hiddenInput();
         }
         ?>
 
         <?= $form->field($model, 'name') ?>
         <?= $form->field($model, 'short_des') ?>
         <?= $form->field($model, 'warning_info') ?>
+
+        <?= $form->field($model, 'status')->dropDownList(
+            [0 => '未上架', 1 => '已上架', 2 => '缺货/售罄'], 
+            ['class' => 'form-control']) 
+        ?>
+
         <?= $form->field($model, 'description')->widget(\yii\redactor\widgets\Redactor::className(), [
             'clientOptions' => [
                 'imageManagerJson' => ['/redactor/upload/image-json'],

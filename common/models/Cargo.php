@@ -12,6 +12,7 @@ use Yii;
  * @property string $short_des
  * @property string $warning_info
  * @property string $description
+ * @property integer $status
  */
 class Cargo extends \yii\db\ActiveRecord
 {
@@ -31,6 +32,7 @@ class Cargo extends \yii\db\ActiveRecord
         return [
             [['description'], 'string'],
             [['name', 'short_des', 'warning_info'], 'string', 'max' => 255],
+            [['status'], 'integer'],
         ];
     }
 
@@ -45,6 +47,7 @@ class Cargo extends \yii\db\ActiveRecord
             'short_des' => 'Short Des',
             'warning_info' => 'Warning Info',
             'description' => 'Description',
+            'status' => '商品状态'
         ];
     }
 }
