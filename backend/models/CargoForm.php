@@ -14,6 +14,7 @@ use common\models\Cargo;
  * @property string $short_des
  * @property string $warning_info
  * @property string $description
+ * @property integer $status
  */
 class CargoForm extends Model
 {
@@ -22,7 +23,7 @@ class CargoForm extends Model
     public $short_des;
     public $warning_info;
     public $description;
-
+    public $status;
 
     /**
      * Short 
@@ -33,7 +34,7 @@ class CargoForm extends Model
     public function rules()
     {
         return [
-            [['id'], 'integer'],
+            [['id', 'status'], 'integer'],
             [['description'], 'string'],
             [['name', 'short_des', 'warning_info'], 'string', 'max' => 255],
         ];
@@ -41,25 +42,37 @@ class CargoForm extends Model
 
     public function find($id)
     {
-        if (($model = User::findOne($id)) !== null) {
+        if (($model = Cargo::findOne($id)) !== null) {
             $this->id = $model->id;
             $this->name = $model->name;
             $this->short_des = $model->short_des;
             $this->warning_info = $model->warning_info;
             $this->description = $model->description;
+            $this->status = $model->status;
             return true;
         }
         return false;
     }
 
+    /**
+     * @param Cargo $model
+     */
+    private function setModelValues($model)
+    {
+        $model->name = $this->name;
+        $model->short_des = $this->short_des;
+        $model->warning_info = $this->warning_info;
+        $model->description = $this->description;
+        $model->status = $this->status;
+    }
+
     public function update()
     {
-        if (($model = Cargo::findOne($id)) !== null) {
-            $model->name = $this->name;
-            $model->short_des = $this->short_des;
-            $model->waring_info = $this->waring_info;
-            $model->description = $this->description;
-            return $this->save();
+        yii::trace('update');
+        yii::trace($this->id);
+        if (($model = Cargo::findOne($this->id)) !== null) {
+            $this->setModelValues($model);
+            return $model->save();
         }
 
         return false;
@@ -71,10 +84,7 @@ class CargoForm extends Model
         Yii::trace($this->name);
         if ($this->validate()) {
             $model = new Cargo();
-            $model->name = $this->name;
-            $model->short_des = $this->short_des;
-            $model->warning_info = $this->warning_info;
-            $model->description = $this->description;
+            $this->setModelValues($model);
             return $model->save();
         }
         return false;
@@ -91,6 +101,7 @@ class CargoForm extends Model
             'short_des' => '简要描述',
             'warning_info' => '提示信息',
             'description' => '详细描述',
+            'status' => '商品状态',
         ];
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\controllers;
+namespace backend\controllers\food;
 
 use Yii;
 use backend\controllers\AcfController;
@@ -10,7 +10,7 @@ use backend\models\FoodspecSearch;
 /**
  * Site controller
  */
-class FoodspecController extends AcfController
+class SpecificationController extends AcfController
 {
     public function actionIndex()
     {
