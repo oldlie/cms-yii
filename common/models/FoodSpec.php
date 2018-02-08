@@ -10,7 +10,7 @@ use Yii;
  * @property integer $id
  * @property integer $cargo_id
  * @property string $name
- * @property string $breed
+ * @property string $category
  * @property string $origin
  * @property string $feature
  * @property string $spec
@@ -37,7 +37,7 @@ class FoodSpec extends \yii\db\ActiveRecord
     {
         return [
             [['cargo_id', 'price', 'inventory'], 'integer'],
-            [['name', 'breed', 'origin', 'feature', 'spec', 'store', 'product_datetime', 'quota_policy'], 'string', 'max' => 255],
+            [['name', 'category', 'origin', 'feature', 'spec', 'store', 'product_datetime', 'quota_policy'], 'string', 'max' => 255],
         ];
     }
 
@@ -50,7 +50,7 @@ class FoodSpec extends \yii\db\ActiveRecord
             'id' => 'ID',
             'cargo_id' => 'Cargo ID',
             'name' => 'Name',
-            'breed' => 'Category',
+            'category' => 'Category',
             'origin' => 'Origin',
             'feature' => 'Feature',
             'spec' => 'Spec',

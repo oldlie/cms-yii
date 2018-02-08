@@ -1,13 +1,13 @@
 <?php
 
-namespace backend\models;
+namespace backend\models\food;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\FoodSpec;
 
-class FoodspecSearch extends FoodSpec
+class SpecificationSearch extends FoodSpec
 {
     /**
      * @inheritdoc

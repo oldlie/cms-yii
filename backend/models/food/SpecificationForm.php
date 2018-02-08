@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\models;
+namespace backend\models\food;
 
 use Yii;
 use Yii\base\Model;
@@ -14,6 +14,7 @@ use common\models\FoodSpec;
  * @property string $name
  * @property string $origin 原产地
  * @property string $feature 特征
+ * @property string $spec 规格
  * @property string $store 存储方式
  * @property string $product_datetime 生产日期
  * @property string $quota_policy 限购政策
@@ -21,8 +22,9 @@ use common\models\FoodSpec;
  * @property integer $inventory 库存
  */
 
-class FoodspecForm extends Model
+class SpecificationForm extends Model
 {
+    public $id;
     public $cargo_id;
     public $name;
     public $origin;
@@ -41,28 +43,17 @@ class FoodspecForm extends Model
     public function rules()
     {
         return [
-            [['cargo_id', 'price', 'inventory'], 'integer'],
+            [['id', 'cargo_id', 'price', 'inventory'], 'integer'],
             [['name', 'origin', 'breed', 'feature', 'spec', 'store', 'product_datetime', 'quota_policy'], 'string', 'max' => 255],
         ];
     }
 
 
-    public function create()
+    public function save()
     {
         if ($this->validate()) {
             $model = new FoodSpec();
-            $model->cargo_id = $this->cargo_id;
-            $model->name = $this->name;
-            $model->breed = $this->breed;
-            $model->origin = $this->origin;
-            $model->feature = $this->feature;
-            $model->spec = $this->spec;
-            $model->store = $this->store;
-            $model->product_datetime = $this->product_datetime;
-            $model->quota_policy = $this->quota_policy;
-            $model->price = $this->price;
-            $model->inventory = $this->inventory;
-            return $model->save();
+            return $this->setModelValues($model);
         }
         return false;
     }
@@ -70,18 +61,7 @@ class FoodspecForm extends Model
     public function update($id)
     {
         if (($model = FoodSpec::findOne($id)) != null) {
-            $model->cargo_id = $this->cargo_id;
-            $model->name = $this->name;
-            $model->breed = $this->breed;
-            $model->origin = $this->origin;
-            $model->feature = $this->feature;
-            $model->spec = $this->spec;
-            $model->store = $this->store;
-            $model->product_datetime = $this->product_datetime;
-            $model->quota_policy = $this->quota_policy;
-            $model->price = $this->price;
-            $model->inventory = $this->inventory;
-            return $model->save();
+            return $this->setModelValues($model);
         }
         return false;
     }
@@ -90,7 +70,7 @@ class FoodspecForm extends Model
         if (($model = FoodSpec::findOne($id)) != null) {
             $this->cargo_id = $model->cargo_id;
             $this->name = $model->name;
-            $this->breed = $model->breed;
+            $this->breed = $model->category;
             $this->origin = $model->origin;
             $this->feature = $model->feature;
             $this->spec = $model->spec;
@@ -112,11 +92,36 @@ class FoodspecForm extends Model
         return [
             'id' => 'ID',
             'cargo_id' => '商品ID',
-            'short_des' => '简要描述',
+            'name' => '规格名称',
+            'origin' => '原产地',
+            'breed' => '品种',
+            'feature' => '特征',
+            'spec' => '包装规格',
+            'store' => '存储方式',
+            'product_datetime' => '采收加工',
+            'quota_policy' => '限购',
             'price' => '价格',
             'inventory' => '库存',
-            'warning_info' => '提示信息',
-            'description' => '详细描述',
         ];
+    }
+
+    /**
+     * @param common\models\FoodSpec $model
+     * @return bool 
+     */
+    private function setModelValues($model)
+    {
+        $model->cargo_id = $this->cargo_id;
+        $model->name = $this->name;
+        $model->category = $this->breed;
+        $model->origin = $this->origin;
+        $model->feature = $this->feature;
+        $model->spec = $this->spec;
+        $model->store = $this->store;
+        $model->product_datetime = $this->product_datetime;
+        $model->quota_policy = $this->quota_policy;
+        $model->price = $this->price;
+        $model->inventory = $this->inventory;
+        return $model->save();
     }
 }

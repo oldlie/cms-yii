@@ -4,8 +4,9 @@ namespace backend\controllers\food;
 
 use Yii;
 use backend\controllers\AcfController;
-use backend\models\FoodspecForm;
-use backend\models\FoodspecSearch;
+use backend\models\food\SpecificationForm;
+use backend\models\food\SpecificationSearch;
+use yii\data\Pagination;
 
 /**
  * Site controller
@@ -14,7 +15,9 @@ class SpecificationController extends AcfController
 {
     public function actionIndex()
     {
-        $searchModel = new FoodspecSearch();
+        $searchModel = new SpecificationSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
         $query = $dataProvider->query;
 
         $pagination = new Pagination([
@@ -35,7 +38,7 @@ class SpecificationController extends AcfController
 
     public function actionCreate()
     {
-        $model = new FoodspecForm();
+        $model = new SpecificationForm();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         }
@@ -48,12 +51,13 @@ class SpecificationController extends AcfController
         return $this->render(['index']);
     }
 
-    public function actionUpdate($id) {
-        $model = new FoodspecForm();
+    public function actionUpdate($id, $message = '') {
+        $model = new SpecificationForm();
         if ($model->load(Yii::$app->request->post()) && $model->update($id)) {
-            return $this->redirect(['index']);
+            return $this->redirect(['update', $message]);
         }
-        return $this->render('update', ['model' => $model]);
+        $model->find($id);
+        return $this->render('update', ['model' => $model, 'message' => $message]);
     }
 
     protected function findModel($id)
