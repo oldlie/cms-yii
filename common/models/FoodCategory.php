@@ -9,12 +9,10 @@ use Yii;
  *
  * @property integer $id
  * @property integer $seq
- * @property string $title
- * @property integer $parent_id
- * @property string $parent_title
- * @property integer $children_count
- * @property string $path_id
- * @property string $path_title
+ * @property integer $tag_id
+ * @property string $tag_title
+ * @property integer $cargo_id
+ * @property string $cargo_name
  */
 class FoodCategory extends \yii\db\ActiveRecord
 {
@@ -32,8 +30,8 @@ class FoodCategory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['seq', 'parent_id', 'children_count'], 'integer'],
-            [['title', 'parent_title', 'path_id', 'path_title'], 'string', 'max' => 255],
+            [['seq', 'tag_id', 'cargo_id'], 'integer'],
+            [['tag_title', 'cargo_name'], 'string', 'max' => 255],
         ];
     }
 

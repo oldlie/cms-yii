@@ -12,6 +12,8 @@ class m180207_055119_create_food_category extends Migration
             'seq' => $this->string()->comment('序号'),
             'tag_id' => $this->integer()->comment('标签ID'),
             'tag_title' => $this->string()->comment('标签名称'),
+            'cargo_id' => $this->integer()->comment('商品ID'),
+            'cargo_name' => $this->string()->comment('商品名称'),
         ], $tableOptions);
     }
 

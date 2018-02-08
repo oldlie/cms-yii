@@ -11,49 +11,73 @@ use common\models\FoodCategory;
  * 
  * @property integer $id
  * @property integer $seq
- * @property string $title
- * @property integer $parent_id
- * @property string $parent_title
- * @property integer $children_count
- * @property string $path_id
- * @property string $path_title
+ * @property integer $tag_id
+ * @property string $tag_title
+ * @property integer $cargo_id
+ * @property string $cargo_name
  */
 class CategoryForm extends Model
 {
     public $id;
     public $seq;
-    public $title;
-    public $parent_id;
-    public $parent_title;
-    public $children_count;
-    public $path_id;
-    public $path_title;
+    public $tag_id;
+    public $tag_title;
+    public $cargo_id;
+    public $cargo_name;
 
     /**
      * 设置值
      * 
      * @param FoodCategory $model
+     * @return boolean
      */
     private function setModelValues($model)
     {
         $model->seq = $this->seq;
-        $model->title = $this->title;
-        $model->parent_id = $this->parent_id;
+        $model->tag_id = $this->tag_id;
+        $model->tag_title = $this->tag_title;
+        $model->cargo_id = $this->cargo_id;
+        $model->cargo_name = $this->cargo_name;
+        return $model->save();
     }
 
     public function rules()
     {
         return [
-            [['seq', 'parent_id', 'children_count'], 'integer'],
-            [['title', 'parent_title', 'path_id', 'path_title'], 'string', 'max' => 255],
+            [['id', 'seq', 'tag_id', 'cargo_id'], 'integer'],
+            [['tag_title', 'cargo_name'], 'string', 'max' => 255],
         ];
     }
 
+    /**
+     * @return boolean
+     */
     public function save()
     {
-        $model = new FoodCategory();
-
+        if ($this->validate()) {
+            $model = new FoodCategory();
+            return $this->setModelValues($model);
+        }
+        return false;
     }
 
+    public function update()
+    {
+        if ($this->validate() && ($model = FoodCategory::findOne($this->id)) != null){
+            return $this->setModelValues($model);
+        }
+    }
 
+    public function find($id) 
+    {
+        if (($model = FoodCategory::findOne($id)) != null) {
+            $this->seq = $model->seq;
+            $this->tag_id = $model->tag_id;
+            $this->tag_title = $model->tag_title;
+            $this->cargo_id = $model->cargo_id;
+            $this->cargo_name = $model->cargo_name;
+            return true;
+        }
+        return false;
+    }
 }
