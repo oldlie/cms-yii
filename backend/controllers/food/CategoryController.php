@@ -16,7 +16,7 @@ use yii\data\Pagination;
  */
 class CategoryController extends AcfController
 {
-    public function actionIndex()
+    public function actionIndex($message = '')
     {
         $searchModel = new CategorySearch();
         $query = $dataProvider->query;
@@ -33,7 +33,8 @@ class CategoryController extends AcfController
 
         return $this->render('index', [
             'pagination' => $pagination,
-            'list' => $list
+            'list' => $list,
+            'message' => $message,
         ]);
     }
 
