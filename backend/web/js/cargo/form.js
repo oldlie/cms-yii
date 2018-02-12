@@ -1,7 +1,5 @@
 $(function () {
-    
-<<<<<<< HEAD
-=======
+
     const  trTemp = `<tr>\
     <td>@{id}</td>
     <td>@{title}</td>
@@ -49,5 +47,4 @@ $(function () {
             }
         });
     }
->>>>>>> bb5de6703ef01e08ee56b305cce057df57e4e8b5
 });
