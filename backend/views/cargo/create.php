@@ -16,16 +16,7 @@ $this->title = 'Add Cargo';
     <section class="content" >
 
     <div class="row">
-        <div class="col-sm-12 col-md-8">
-            <div class="box box-info">
-                <div class="box-header with-border">
-                    <div class="box-title">添加商品</div>
-                </div>
-                <div class="box-body">
-                    <?= $this->render('_form', ['model' => $model])?>
-                </div>
-            </div>
-        </div>
+        <?= $this->render('_form', ['model' => $model])?>
     </div>
 
     </section>

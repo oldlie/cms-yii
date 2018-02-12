@@ -1,7 +1,9 @@
 <?php
 use backend\components\MainSidebar;
 
-/* @var $this yii\web\View */
+/**
+ * @var yii\web\View $this
+ */
 
 $this->title = 'My Yii Application';
 ?>

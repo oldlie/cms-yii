@@ -20,7 +20,7 @@ $this->title = '添加食品规格';
                         <div class="box-title">添加食品规格</div>
                     </div>
                     <div class="box-body">
-                        <?= $this->render('_form', ['model' => $model])?>
+                        <?= $this->render('_form', ['model' => $model, 'message' => $message])?>
                     </div>
                 </div>
             </div>

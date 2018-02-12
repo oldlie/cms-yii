@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\Url;
 
 /**
  * 食品规格表单
@@ -38,3 +39,17 @@ use yii\widgets\ActiveForm;
         </div>
     <?php ActiveForm::end(); ?>
 
+<div id="callOut"></div>
+
+<?php
+
+$updateUrl = Url::to(['ajax-status']);
+
+$js_def = <<< js
+var updateStatusUrl = '$updateUrl';
+var message = '$message';
+js;
+
+$this->registerJs($js_def, \Yii\web\View::POS_END);
+$this->registerJsFile('@web/js/food/specification.js', ['depends' => 'backend\assets\AppAsset']);
+?>
