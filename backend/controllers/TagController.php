@@ -90,5 +90,11 @@ class TagController extends AcfController
         $models = TagModel::find()->where(['parent_id' => $id])->orderBy('id desc')->all();
         return ['status' => 1, 'list' => $models];
     }
+
+    public function actionAjaxList($id, $name)
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $query = TagModel::find();
+    }
     
 }
