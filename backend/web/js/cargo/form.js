@@ -1,11 +1,11 @@
 $(function () {
     
-<<<<<<< HEAD
-=======
     const  trTemp = `<tr>\
     <td>@{id}</td>
     <td>@{title}</td>
     <td>@{summary}</td>
+    <td>@{price}</td>
+    <td>@{inventory}</td>
     <td>
         <button class="btn btn-default btn-sm" data-id="@{id}" data-value="@{title}">选择<button>
     </td>
@@ -23,7 +23,9 @@ $(function () {
                     html += core.html(trTemp, {
                         'id': item['id'], 
                         'title': itme['name'], 
-                        'summary' : item['feature']
+                        'summary' : item['feature'],
+                        'price': item['price'],
+                        'inventory': item['inventory']
                     });
                 }
                 $('#specTableContent').html(html);
@@ -49,5 +51,4 @@ $(function () {
             }
         });
     }
->>>>>>> bb5de6703ef01e08ee56b305cce057df57e4e8b5
 });

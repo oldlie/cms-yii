@@ -118,17 +118,20 @@ use yii\helpers\Url;
                             </div>
                             <!-- ./ search input-->
                             <table class="table table-bordered">
-                                <tr>
-                                    <th style="width:40px;">
-                                        <input id="checkAll" type="checkbox">
-                                    </th>
-                                    <th style="width:60px;">序号</th>
-                                    <th style="width:180px;">规格名称</th>
-                                    <th>规格特征</th>
-                                    <th>价格</th>
-                                    <th style="width:60px;">库存</th>
-                                    <th style="width:80px;">操作</th>
-                                </tr>
+                                <thead>
+                                    <tr>
+                                        <th style="width:40px;">
+                                            <input id="checkAll" type="checkbox">
+                                        </th>
+                                        <th style="width:60px;">序号</th>
+                                        <th style="width:180px;">规格名称</th>
+                                        <th>规格特征</th>
+                                        <th>价格</th>
+                                        <th style="width:60px;">库存</th>
+                                        <th style="width:80px;">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="specTableContent"></tbody>
                             </table>
                         </div>
                         <!-- ./ selectSpecTab -->
@@ -147,6 +150,75 @@ use yii\helpers\Url;
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+<div class="modal fade" id="specModel" tabindex="-1" role="dialog" aria-labelledby="tagModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs pull-right">
+                        <li><a href="#createSpecTab" data-toggle="tab">新建规格</a></li>
+                        <li class="active"><a href="#selectSpecTab" data-toggle="tab">选择规格</a></li>
+                        <li class="pull-left header"><i class="fa fa-inbox"></i> 给商品添加规格</li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="chart tab-pane" id="createSpecTab" style="position: relative; height: 300px;">
+                            
+                        </div>
+                        <!-- ./ createSpecTab -->
+                        <div class="chart tab-pane active" id="selectSpecTab" style="position: relative; height: 300px;">
+                            <div class="input-group margin col-sm-12 col-md-6">
+                                <input type="text" class="form-control">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-info btn-flat">按名称检索</button>
+                                </span>
+                            </div>
+                            <!-- ./ search input-->
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th style="width:40px;">
+                                            <input id="checkAll" type="checkbox">
+                                        </th>
+                                        <th style="width:60px;">序号</th>
+                                        <th style="width:180px;">规格名称</th>
+                                        <th>规格特征</th>
+                                        <th>价格</th>
+                                        <th style="width:60px;">库存</th>
+                                        <th style="width:80px;">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="specTableContent"></tbody>
+                            </table>
+                        </div>
+                        <!-- ./ selectSpecTab -->
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!-- /. html template -->
+<div class="hide">
+    <div id="tagTdHtmlTemp">
+        <tr>
+            <td></td>
+        </tr>
+    </div>
+</div>
+<!-- /. html template -->
+
 <?php
 $listSpecUrl = Url::to(['/food/specification/ajax-list']);
 
