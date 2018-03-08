@@ -53,7 +53,9 @@ class SpecificationForm extends Model
     {
         if ($this->validate()) {
             $model = new FoodSpec();
-            return $this->setModelValues($model);
+            $ret = $this->setModelValues($model);
+            $this->id = $model->id;
+            return $ret;
         }
         return false;
     }
@@ -70,7 +72,7 @@ class SpecificationForm extends Model
         if (($model = FoodSpec::findOne($id)) != null) {
             $this->cargo_id = $model->cargo_id;
             $this->name = $model->name;
-            $this->breed = $model->category;
+            $this->breed = $model->breed;
             $this->origin = $model->origin;
             $this->feature = $model->feature;
             $this->spec = $model->spec;
@@ -113,7 +115,7 @@ class SpecificationForm extends Model
     {
         $model->cargo_id = $this->cargo_id;
         $model->name = $this->name;
-        $model->category = $this->breed;
+        $model->breed = $this->breed;
         $model->origin = $this->origin;
         $model->feature = $this->feature;
         $model->spec = $this->spec;

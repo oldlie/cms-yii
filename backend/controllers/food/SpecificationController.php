@@ -42,15 +42,19 @@ class SpecificationController extends AcfController
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $request = Yii::$app->request;
         
+        if (!$request->isPost) {
+            return ['status' => 0, 'message' => '请重新登录。'];
+        }
+
         $query = FoodSpec::find();
-        $query->andFilterWhere(['>', 'cargo_id', 0]);
+        // $query->andFilterWhere(['>', 'cargo_id', 0]);
         if ($name = $request->post('name') && $name != '') {
             $query->andFilterWhere(['like', 'name'], $name);
         }
 
         $page = $request->post('page');
         $start = 0; 
-        $offset = 20;
+        $offset = 10;
         if (is_numeric($page)) {
             $start = ($page - 1) * $offset;
         }
@@ -71,6 +75,16 @@ class SpecificationController extends AcfController
         return $this->render('create', ['model' => $model, 'message' => '']);
     }
 
+    public function actionAjaxCreate()
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $model = new SpecificationForm();
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return ['status' => 1, 'id' => $model->id, 'message' => '食品规格已保存。'];
+        }
+        return ['status' => 0, 'message' => '没有正确的添加食品规格，请稍候再试。'];
+    }
+
     public function actionDelete($id)
     {
         $model = FoodSpec::findOne($id);
@@ -88,11 +102,6 @@ class SpecificationController extends AcfController
         }
         $model->find($id);
         return $this->render('update', ['model' => $model, 'message' => '']);
-    }
-
-    public function actionAjaxList()
-    {
-
     }
 
     protected function findModel($id)
