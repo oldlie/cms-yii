@@ -58,17 +58,16 @@ use yii\helpers\Url;
                 <button type="button" class="btn btn-default btn-block" data-toggle="modal" data-target="#specModel">选择规格</button>    
 
                 <table class="table table-bordered">
-                    <tr>
-                        <th>ID</th>
-                        <th>规格名称</th>
-                        <th></th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>童子鸡套餐</td>
-                        <td><a href="#" class="text-red"><i class="fa fa-trash"></i></a></td>
-                    </tr>
+                    <thead> 
+                        <tr>
+                            <th>ID</th>
+                            <th>规格名称</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="specTableBody"></tbody>
                 </table>
+
             </div>
         
             <div class="from-group">
@@ -105,6 +104,117 @@ use yii\helpers\Url;
                         <li class="pull-left header"><i class="fa fa-inbox"></i> 给商品添加规格</li>
                     </ul>
                     <div class="tab-content">
+                        <div class="chart tab-pane" id="createSpecTab" style="position: relative; ">
+
+                            <div class="col-sm-12" style="box-sizing:border-box;overflow:auto;height:100%;">
+
+                                <div class="form-group">
+                                    <label for="" class="control-label">规格名称</label>
+                                    <input id="specNameInput" type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="control-label">品种</label>
+                                    <input id="breedInput" type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="control-label">原产地</label>
+                                    <input id="originInput" type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="control-label">特征</label>
+                                    <input id="featureInput" type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="control-label">存储方式</label>
+                                    <input id="storeInput" type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="control-label">包装规格</label>
+                                    <input id="specInput" type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="control-label">采收加工</label>
+                                    <input id="productDatetimeInput" type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="control-label">限购</label>
+                                    <input id="quotaInput" type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="control-label">价格</label>
+                                    <input id="priceInput" type="number" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="control-label">库存</label>
+                                    <input id="inventoryInput" type="number" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <button id="newSpecBtn" class="btn btn-primary">选择并保存</button>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <!-- ./ createSpecTab -->
+                        <div class="chart tab-pane active" id="selectSpecTab" style="position: relative; ">
+                            <div class="input-group margin col-sm-12 col-md-6">
+                                <input type="text" class="form-control">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-info btn-flat">按名称检索</button>
+                                </span>
+                            </div>
+                            <!-- ./ search input-->
+                            <div style="box-sizing:box-border;overflow:auto;height:100%">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:40px;">
+                                                <input id="checkAll" type="checkbox">
+                                            </th>
+                                            <th style="width:60px;">序号</th>
+                                            <th style="width:180px;">规格名称</th>
+                                            <th>规格特征</th>
+                                            <th>价格</th>
+                                            <th style="width:60px;">库存</th>
+                                            <th style="width:80px;">操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="specTableContent"></tbody>
+                                </table>
+
+                                
+                                <div id="specPagenation"></div>
+                            </div>
+
+                        </div>
+                        <!-- ./ selectSpecTab -->
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<div class="modal fade" id="tagModel" tabindex="-1" role="dialog" aria-labelledby="tagModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs pull-right">
+                        <li><a href="#createSpecTab" data-toggle="tab">新建规格</a></li>
+                        <li class="active"><a href="#selectSpecTab" data-toggle="tab">选择规格</a></li>
+                        <li class="pull-left header"><i class="fa fa-inbox"></i> 给商品添加规格</li>
+                    </ul>
+                    <div class="tab-content">
                         <div class="chart tab-pane" id="createSpecTab" style="position: relative; height: 300px;">
                             
                         </div>
@@ -118,17 +228,20 @@ use yii\helpers\Url;
                             </div>
                             <!-- ./ search input-->
                             <table class="table table-bordered">
-                                <tr>
-                                    <th style="width:40px;">
-                                        <input id="checkAll" type="checkbox">
-                                    </th>
-                                    <th style="width:60px;">序号</th>
-                                    <th style="width:180px;">规格名称</th>
-                                    <th>规格特征</th>
-                                    <th>价格</th>
-                                    <th style="width:60px;">库存</th>
-                                    <th style="width:80px;">操作</th>
-                                </tr>
+                                <thead>
+                                    <tr>
+                                        <th style="width:40px;">
+                                            <input id="checkAll" type="checkbox">
+                                        </th>
+                                        <th style="width:60px;">序号</th>
+                                        <th style="width:180px;">规格名称</th>
+                                        <th>规格特征</th>
+                                        <th>价格</th>
+                                        <th style="width:60px;">库存</th>
+                                        <th style="width:80px;">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="specTableContent"></tbody>
                             </table>
                         </div>
                         <!-- ./ selectSpecTab -->
@@ -147,11 +260,14 @@ use yii\helpers\Url;
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
 <?php
 $listSpecUrl = Url::to(['/food/specification/ajax-list']);
+$ajaxCreateSpec = Url::to(['/food/specification/ajax-create']);
 
 $js_def = <<< js
-var listSpecUrl = '$listSpecUrl';
+var ajaxListSpecUrl = '$listSpecUrl';
+var ajaxCreateSpecUrl = '$ajaxCreateSpec';
 js;
 
 $this->registerJs($js_def, \Yii\web\View::POS_END);

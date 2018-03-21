@@ -147,3 +147,62 @@ $(function () {
         radioClass: 'iradio_minimal-blue'
     });
 });
+
+var Pagination = (function () {
+    const _ulWarp = '<ul class="pagination pagination-sm inline">@{content}</ul>';
+    const _liWarp = '<li><a class="@{cssClass}" data-index="@{index}">@{text}</a></li>';
+
+    let _targetElement;
+    let _core;
+    let _cssClass;
+    let _pagination;
+
+    function Pagination(targetElement, cssClass) {
+        this._pagination = this;
+
+        this._targetElement = targetElement;
+        this._core = new Core();
+        console.log(`_core:${this._core}`);
+        this._cssClass = cssClass;
+    }
+
+    Pagination.prototype.render = function (page, size, total, cells) {
+        const data = this._core.pagination(page, size, total, cells);
+        const list = data['list'];
+        const length = list.length;
+        if (length <= 1) {
+            return;
+        }
+        console.log(`pagination render:${_liWarp}`);
+        let liHtml = this._core.html(_liWarp, {
+            cssClass: this._cssClass, 
+            index: 1,
+            text: '&laquo;'
+        });
+        for (let i = 0; i < length; i++) {
+            liHtml += this._core.html(_liWarp, {
+                cssClass: this._cssClass,
+                index: list[i],
+                text: list[i]
+            });
+        }
+        liHtml += this._core.html(_liWarp, {
+            cssClass: this._cssClass, 
+            index: data['pages'],
+            text: '&raquo;'
+        });
+        let html = this._core.html(_ulWarp, {
+            content: liHtml
+        });
+        $(this._targetElement).html(html);
+
+        return this._pagination;;
+    }
+
+    Pagination.prototype.bindEvent = function (fn) {
+        fn();
+        return this._pagination;
+    }
+
+    return Pagination;
+})();
