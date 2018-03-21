@@ -71,7 +71,7 @@ use yii\helpers\Url;
             </div>
         
             <div class="from-group">
-                <button type="button" class="btn btn-default btn-block">选择标签</button>
+                <button type="button" class="btn btn-default btn-block" data-toggle="modal" data-target="#tagModel">选择标签</button>
                 <table class="table table-bordered">
                     <tr>
                         <th>ID</th>
@@ -158,9 +158,9 @@ use yii\helpers\Url;
                         <!-- ./ createSpecTab -->
                         <div class="chart tab-pane active" id="selectSpecTab" style="position: relative; ">
                             <div class="input-group margin col-sm-12 col-md-6">
-                                <input type="text" class="form-control">
+                                <input id="specNameSearchInput" type="text" class="form-control">
                                 <span class="input-group-btn">
-                                    <button type="button" class="btn btn-info btn-flat">按名称检索</button>
+                                    <button id="specNameSearchBtn" type="button" class="btn btn-info btn-flat">按名称检索</button>
                                 </span>
                             </div>
                             <!-- ./ search input-->
@@ -210,9 +210,9 @@ use yii\helpers\Url;
                 
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs pull-right">
-                        <li><a href="#createSpecTab" data-toggle="tab">新建规格</a></li>
-                        <li class="active"><a href="#selectSpecTab" data-toggle="tab">选择规格</a></li>
-                        <li class="pull-left header"><i class="fa fa-inbox"></i> 给商品添加规格</li>
+                        <li><a href="#createSpecTab" data-toggle="tab">新建</a></li>
+                        <li class="active"><a href="#selectSpecTab" data-toggle="tab">选择标签</a></li>
+                        <li class="pull-left header"><i class="fa fa-inbox"></i> 给商品添加标签</li>
                     </ul>
                     <div class="tab-content">
                         <div class="chart tab-pane" id="createSpecTab" style="position: relative; height: 300px;">
