@@ -144,4 +144,5 @@ $(function () {
         specForm.page = 1;
         loadSpec();
     });
+
 });
