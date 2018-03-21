@@ -24,6 +24,8 @@ const  specTdhtmlTemp = `<tr>\
         page: 1
     };
 
+    const specPagination = new Pagination('#specPagenation', 'spec-pagination');
+
     function loadSpec() {
         $.post(ajaxListSpecUrl, specForm, function (json) {
             console.log(json);
@@ -40,6 +42,14 @@ const  specTdhtmlTemp = `<tr>\
                     });
                 }
                 $('#specTableContent').html(html);
+                specPagination.render(specForm.page, 10, json['total'], 5)
+                    .bindEvent(() => {
+                        $('.spec-pagination').on('click', function () {
+                            specForm.page = $(this).attr('data-index');
+                            loadSpec();
+                        });
+                    });
+
             } else {
                 callout.warning(json['message']);
             }

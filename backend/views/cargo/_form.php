@@ -67,6 +67,7 @@ use yii\helpers\Url;
                     </thead>
                     <tbody id="specTableBody"></tbody>
                 </table>
+
             </div>
         
             <div class="from-group">
@@ -180,6 +181,9 @@ use yii\helpers\Url;
                                     </thead>
                                     <tbody id="specTableContent"></tbody>
                                 </table>
+
+                                
+                                <div id="specPagenation"></div>
                             </div>
 
                         </div>
