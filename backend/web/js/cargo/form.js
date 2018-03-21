@@ -1,5 +1,4 @@
 $(function () {
-    
     const  trTemp = `<tr>\
     <td><input type="checkbox"></td>
     <td>@{id}</td>
@@ -130,4 +129,5 @@ const  specTdhtmlTemp = `<tr>\
         specForm.page = 1;
         loadSpec();
     });
+
 });
