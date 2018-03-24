@@ -1,6 +1,6 @@
 $(function () {
-    
-    const  trTemp = `<tr>\
+
+    const trTemp = `<tr>\
     <td><input type="checkbox"></td>
     <td>@{id}</td>
     <td>@{title}</td>
@@ -8,11 +8,11 @@ $(function () {
     <td>@{price}</td>
     <td>@{inventory}</td>
     <td>
-        <button class="btn btn-default btn-sm" data-id="@{id}" data-value="@{title}">选择</button>
+        <button class="btn btn-default btn-sm spec-chose-btn" data-id="@{id}" data-value="@{title}">选择</button>
     </td>
 </tr>`;
 
-const  specTdhtmlTemp = `<tr>\
+    const specTdhtmlTemp = `<tr>\
 <td>@{id}</td>\
 <td>@{title}</td>\
 <td><a class=".spec-delete-btn text-red"><i class="fa fa-trash"></i></a></td>\
@@ -32,11 +32,20 @@ const tagHtmlTemp = `<tr>
     const core = new Core();
     const callout = new CallOut('#callOut');
     const specForm = {
-        page: 1
+        page: 1,
+        name: ''
     };
     const tagForm = {
         id: 0
     };
+
+    const specPagination = new Pagination('#specPagenation', 'spec-pagination');
+
+    $('#specNameSearchBtn').on('click', function () {
+        specForm.name = $('#specNameSearchInput').val();
+        console.log($('#specNameSearchInput').val(), specForm);
+        loadSpec();
+    });
 
     function loadSpec() {
         $.post(ajaxListSpecUrl, specForm, function (json) {
@@ -44,16 +53,31 @@ const tagHtmlTemp = `<tr>
             if (json['status'] === 1) {
                 let html = '';
                 for (let i = 0; i < json['list'].length; i++) {
-                    let item  = json['list'][i];
+                    let item = json['list'][i];
                     html += core.html(trTemp, {
-                        'id': item['id'], 
-                        'title': item['name'], 
-                        'summary' : item['feature'],
+                        'id': item['id'],
+                        'title': item['name'],
+                        'summary': item['feature'],
                         'price': item['price'],
                         'inventory': item['inventory']
                     });
                 }
                 $('#specTableContent').html(html);
+                specPagination.render(specForm.page, 10, json['total'], 5)
+                    .bindEvent(() => {
+                        $('.spec-pagination').on('click', function () {
+                            specForm.page = $(this).attr('data-index');
+                            loadSpec();
+                        });
+                    });
+
+                $('.spec-chose-btn').on('click', function () {
+                    $('#specModel').modal('hide');
+                    let id = $(this).attr('data-id');
+                    let title = $(this).attr('data-value');
+                    let html = core.html(specTdhtmlTemp, { id: id, title: title });
+                    $('#specTableBody').append(html);
+                });
             } else {
                 callout.warning(json['message']);
             }
@@ -64,11 +88,11 @@ const tagHtmlTemp = `<tr>
         $.get(`${ajaxListTagUrl}/id=${tagForm.id}`, function (json) {
             if (json['success'] === 1) {
                 for (let i = 0; i < json['list'].length; i++) {
-                    let item  = json['list'][i];
+                    let item = json['list'][i];
                     html += core.html(trTemp, {
-                        'id': item['id'], 
-                        'title': itme['t_text'], 
-                        'summary' : item['feature']
+                        'id': item['id'],
+                        'title': itme['t_text'],
+                        'summary': item['feature']
                     });
                 }
             } else {
@@ -110,7 +134,7 @@ const tagHtmlTemp = `<tr>
             } else {
                 $('#specModel').modal('hide');
                 console.log('temp:', specTdhtmlTemp);
-                let html = core.html(specTdhtmlTemp, {id:json['id'], title: name});
+                let html = core.html(specTdhtmlTemp, { id: json['id'], title: name });
                 $('#specTableBody').append(html);
                 clearNewSpecInput();
             }
