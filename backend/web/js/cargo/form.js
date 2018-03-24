@@ -18,10 +18,24 @@ const  specTdhtmlTemp = `<tr>\
 <td><a class=".spec-delete-btn text-red"><i class="fa fa-trash"></i></a></td>\
 </tr>`;
 
+const tagHtmlTemp = `<tr>
+<th style="width:40px;">\
+    <input id="checkAll" type="checkbox">
+</th>
+<th style="width:60px;">@{id}</th>\
+<th style="width:180px;">@{title}</th>\
+<th style="width:80px;">\
+<button class="btn btn-default btn-sm" data-id="@{id}" data-value="@{title}">选择</button>\
+</th>\
+</tr>`;
+
     const core = new Core();
     const callout = new CallOut('#callOut');
     const specForm = {
         page: 1
+    };
+    const tagForm = {
+        id: 0
     };
 
     function loadSpec() {
@@ -47,7 +61,7 @@ const  specTdhtmlTemp = `<tr>\
     };
 
     function loadTag(formData) {
-        $.post('', formData, function (json) {
+        $.get(`${ajaxListTagUrl}/id=${tagForm.id}`, function (json) {
             if (json['success'] === 1) {
                 for (let i = 0; i < json['list'].length; i++) {
                     let item  = json['list'][i];
@@ -119,5 +133,10 @@ const  specTdhtmlTemp = `<tr>\
     $('#specModel').on('show.bs.modal', function () {
         specForm.page = 1;
         loadSpec();
+    });
+
+    $('#tagModel').on('show.bs.modal', function () {
+        tagForm.id = 0;
+        loadTag();
     });
 });

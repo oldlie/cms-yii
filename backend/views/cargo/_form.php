@@ -70,7 +70,7 @@ use yii\helpers\Url;
             </div>
         
             <div class="from-group">
-                <button type="button" class="btn btn-default btn-block">选择标签</button>
+                <button type="button" class="btn btn-default btn-block" data-toggle="modal" data-target="#tagModel">选择标签</button>
                 <table class="table table-bordered">
                     <tr>
                         <th>ID</th>
@@ -206,9 +206,9 @@ use yii\helpers\Url;
                 
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs pull-right">
-                        <li><a href="#createSpecTab" data-toggle="tab">新建规格</a></li>
-                        <li class="active"><a href="#selectSpecTab" data-toggle="tab">选择规格</a></li>
-                        <li class="pull-left header"><i class="fa fa-inbox"></i> 给商品添加规格</li>
+                        <li><a href="#createSpecTab" data-toggle="tab">新建标签</a></li>
+                        <li class="active"><a href="#selectSpecTab" data-toggle="tab">选择标签</a></li>
+                        <li class="pull-left header"><i class="fa fa-inbox"></i> 给商品添加标签</li>
                     </ul>
                     <div class="tab-content">
                         <div class="chart tab-pane" id="createSpecTab" style="position: relative; height: 300px;">
@@ -230,10 +230,7 @@ use yii\helpers\Url;
                                             <input id="checkAll" type="checkbox">
                                         </th>
                                         <th style="width:60px;">序号</th>
-                                        <th style="width:180px;">规格名称</th>
-                                        <th>规格特征</th>
-                                        <th>价格</th>
-                                        <th style="width:60px;">库存</th>
+                                        <th style="width:180px;">标签名称</th>
                                         <th style="width:80px;">操作</th>
                                     </tr>
                                 </thead>
@@ -260,10 +257,12 @@ use yii\helpers\Url;
 <?php
 $listSpecUrl = Url::to(['/food/specification/ajax-list']);
 $ajaxCreateSpec = Url::to(['/food/specification/ajax-create']);
+$ajaxListTagUrl = Url::to(['/tag/ajax-list']);
 
 $js_def = <<< js
 var ajaxListSpecUrl = '$listSpecUrl';
 var ajaxCreateSpecUrl = '$ajaxCreateSpec';
+var ajaxListTagUrl = '$ajaxListTagUrl';
 js;
 
 $this->registerJs($js_def, \Yii\web\View::POS_END);

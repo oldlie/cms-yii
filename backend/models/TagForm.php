@@ -80,7 +80,11 @@ class TagForm extends Model
             $model = new TagModel();
             $model->t_text = $this->text;
             $model->t_icon = $this->icon;
-            $model->t_icon_file = $this->file_path;
+            if (empty($this->file_path)) {
+                $model->t_icon_file = 'image/image_default.jpg';
+            } else {
+                $model->t_icon_file = $this->file_path;
+            }
             $model->parent_id = $this->parent_id;
             $model->parent_text = $this->parent_text;
             return $model->save();
