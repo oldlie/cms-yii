@@ -145,4 +145,7 @@ $(function () {
         loadSpec();
     });
 
+    $('#tagModel').on('show.bs.modal', function () {
+        
+    });
 });

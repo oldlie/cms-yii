@@ -234,10 +234,9 @@ use yii\helpers\Url;
                                             <input id="checkAll" type="checkbox">
                                         </th>
                                         <th style="width:60px;">序号</th>
-                                        <th style="width:180px;">规格名称</th>
-                                        <th>规格特征</th>
-                                        <th>价格</th>
-                                        <th style="width:60px;">库存</th>
+                                        <th style="width:180px;">标签名称</th>
+                                        <th>图形文件</th>
+                                        <th>上级标签</th>
                                         <th style="width:80px;">操作</th>
                                     </tr>
                                 </thead>
