@@ -230,11 +230,8 @@ use yii\helpers\Url;
                                         </th>
                                         <th style="width:60px;">序号</th>
                                         <th style="width:180px;">标签名称</th>
-<<<<<<< HEAD
-=======
                                         <th>图形文件</th>
                                         <th>上级标签</th>
->>>>>>> f309fd246efa78ba24a1405b3304a2be50c03ac3
                                         <th style="width:80px;">操作</th>
                                     </tr>
                                 </thead>
