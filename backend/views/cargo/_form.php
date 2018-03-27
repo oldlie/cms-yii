@@ -220,12 +220,7 @@ use yii\helpers\Url;
                         </div>
                         <!-- ./ createSpecTab -->
                         <div class="chart tab-pane active" id="selectSpecTab" style="position: relative; height: 300px;">
-                            <div class="input-group margin col-sm-12 col-md-6">
-                                <input type="text" class="form-control">
-                                <span class="input-group-btn">
-                                    <button type="button" class="btn btn-info btn-flat">按名称检索</button>
-                                </span>
-                            </div>
+
                             <!-- ./ search input-->
                             <table class="table table-bordered">
                                 <thead>
@@ -238,8 +233,10 @@ use yii\helpers\Url;
                                         <th style="width:80px;">操作</th>
                                     </tr>
                                 </thead>
-                                <tbody id="specTableContent"></tbody>
+                                <tbody id="tagTableContent"></tbody>
                             </table>
+
+                            <button class="btn btn-default btn-sm" id="goParentTagBtn"><< 返回上级</button>
                         </div>
                         <!-- ./ selectSpecTab -->
                     </div>
@@ -261,7 +258,7 @@ use yii\helpers\Url;
 <?php
 $listSpecUrl = Url::to(['/food/specification/ajax-list']);
 $ajaxCreateSpec = Url::to(['/food/specification/ajax-create']);
-$ajaxListTagUrl = Url::to(['/tag/ajax-list']);
+$ajaxListTagUrl = Url::to(['/tag/ajax-list-tag']);
 
 $js_def = <<< js
 var ajaxListSpecUrl = '$listSpecUrl';

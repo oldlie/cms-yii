@@ -25,6 +25,8 @@ const tagHtmlTemp = `<tr>
 <th style="width:60px;">@{id}</th>\
 <th style="width:180px;">@{title}</th>\
 <th style="width:80px;">\
+<button class="btn btn-default btn-sm child-tag-btn" data-id="@{id}">下级</button>\
+&nbsp;&nbsp;\
 <button class="btn btn-default btn-sm" data-id="@{id}" data-value="@{title}">选择</button>\
 </th>\
 </tr>`;
@@ -36,7 +38,8 @@ const tagHtmlTemp = `<tr>
         name: ''
     };
     const tagForm = {
-        id: 0
+        id: 0,
+        parent: 0
     };
 
     const specPagination = new Pagination('#specPagenation', 'spec-pagination');
@@ -85,21 +88,39 @@ const tagHtmlTemp = `<tr>
     };
 
     function loadTag(formData) {
-        $.get(`${ajaxListTagUrl}/id=${tagForm.id}`, function (json) {
-            if (json['success'] === 1) {
+        $.get(`${ajaxListTagUrl}&id=${tagForm.id}`, function (json) {
+            console.log(`loadTag:`, json);
+            let html = '';
+            if (json['status'] === 1) {
                 for (let i = 0; i < json['list'].length; i++) {
                     let item = json['list'][i];
-                    html += core.html(trTemp, {
+                    html += core.html(tagHtmlTemp, {
                         'id': item['id'],
-                        'title': itme['t_text'],
-                        'summary': item['feature']
+                        'title': item['t_text']
                     });
                 }
+                tagForm.parent = item['parent_id'];
+                $('#tagTableContent').html(html);
+                $('.parent-tag-btn').on('click', function () {
+                    tagForm.id = $(this).attr('data-parent');
+                    if (tagForm.id === 0) { return ;}
+                    loadTag(tagForm);
+                });
+                $('.child-tag-btn').on('click', function () {
+                    tagForm.id = $(this).attr('data-id');
+                    if (tagForm.id === 0) { return ;}
+                    loadTag(tagForm);
+                });
             } else {
-                $('#stagTableContent').html(html);
+                $('#tagTableContent').html('还没有标签。');
             }
         });
     };
+
+    $('#goParentTagBtn').on('click', function () {
+        tagForm.id = tagForm.parent;
+        loadTag(tagForm);
+    });
 
     $('#newSpecBtn').on('click', function () {
         const name = $('#specNameInput').val();
