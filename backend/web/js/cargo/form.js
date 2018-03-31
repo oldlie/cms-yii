@@ -24,7 +24,9 @@ const tagHtmlTemp = `<tr>
 </th>
 <th style="width:60px;">@{id}</th>\
 <th style="width:180px;">@{title}</th>\
-<th style="width:80px;">\
+<th ><img width="32px" height="32px" src="/uploads/@{image}"></th>\
+<th style="width:120px;"><button class="btn btn-default btn-sm parent-tag-btn" data-id="@{parent_id}" >返回@{parent_text}</button></th>\
+<th style="width:120px;">\
 <button class="btn btn-default btn-sm child-tag-btn" data-id="@{id}">下级</button>\
 &nbsp;&nbsp;\
 <button class="btn btn-default btn-sm" data-id="@{id}" data-value="@{title}">选择</button>\
@@ -92,17 +94,29 @@ const tagHtmlTemp = `<tr>
             console.log(`loadTag:`, json);
             let html = '';
             if (json['status'] === 1) {
+
+                console.log(json);
+                console.log(`length:${json['list'].length}`);
+                if (json['list'].length === 0) {
+                    return;
+                }
+
                 for (let i = 0; i < json['list'].length; i++) {
                     let item = json['list'][i];
                     html += core.html(tagHtmlTemp, {
                         'id': item['id'],
-                        'title': item['t_text']
+                        'title': item['t_text'],
+                        'image': item['t_icon_file'],
+                        'parent_id': item['parent_id'],
+                        'parent_text': item['parent_text']
                     });
+                    tagForm.parent = item['parent_id'];
                 }
-                tagForm.parent = item['parent_id'];
+                
                 $('#tagTableContent').html(html);
                 $('.parent-tag-btn').on('click', function () {
-                    tagForm.id = $(this).attr('data-parent');
+                    tagForm.id = $(this).attr('data-id');
+                    console.log(`tagForm.id:${tagForm.id}`);
                     if (tagForm.id === 0) { return ;}
                     loadTag(tagForm);
                 });
@@ -116,11 +130,6 @@ const tagHtmlTemp = `<tr>
             }
         });
     };
-
-    $('#goParentTagBtn').on('click', function () {
-        tagForm.id = tagForm.parent;
-        loadTag(tagForm);
-    });
 
     $('#newSpecBtn').on('click', function () {
         const name = $('#specNameInput').val();

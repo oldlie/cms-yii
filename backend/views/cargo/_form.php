@@ -238,7 +238,6 @@ use yii\helpers\Url;
                                 <tbody id="tagTableContent"></tbody>
                             </table>
 
-                            <button class="btn btn-default btn-sm" id="goParentTagBtn"><< 返回上级</button>
                         </div>
                         <!-- ./ selectSpecTab -->
                     </div>
