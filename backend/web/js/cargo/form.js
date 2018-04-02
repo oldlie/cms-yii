@@ -25,13 +25,14 @@ const tagHtmlTemp = `<tr>
 <th style="width:60px;">@{id}</th>\
 <th style="width:180px;">@{title}</th>\
 <th ><img width="32px" height="32px" src="/uploads/@{image}"></th>\
-<th style="width:120px;"><button class="btn btn-default btn-sm parent-tag-btn" data-id="@{parent_id}" >返回@{parent_text}</button></th>\
 <th style="width:120px;">\
-<button class="btn btn-default btn-sm child-tag-btn" data-id="@{id}">下级</button>\
+<button class="btn btn-default btn-sm child-tag-btn" data-id="@{id}" data-value="@{title}">下级</button>\
 &nbsp;&nbsp;\
-<button class="btn btn-default btn-sm" data-id="@{id}" data-value="@{title}">选择</button>\
+<button class="btn btn-default btn-sm chose-tag-btn" data-id="@{id}" data-value="@{title}">选择</button>\
 </th>\
 </tr>`;
+
+const tagBreadcrumbTemp = `<li class="tag-breadcrumb" data-id="@{id}">@{text}</li>`;
 
     const core = new Core();
     const callout = new CallOut('#callOut');
@@ -43,6 +44,7 @@ const tagHtmlTemp = `<tr>
         id: 0,
         parent: 0
     };
+    let tagBreadcrumbList = [{id: 0, text: '根目录'}];
 
     const specPagination = new Pagination('#specPagenation', 'spec-pagination');
 
@@ -114,16 +116,27 @@ const tagHtmlTemp = `<tr>
                 }
                 
                 $('#tagTableContent').html(html);
-                $('.parent-tag-btn').on('click', function () {
+                drawBreadcrumb();
+                $('.child-tag-btn').on('click', function () {
                     tagForm.id = $(this).attr('data-id');
-                    console.log(`tagForm.id:${tagForm.id}`);
+                    let title = $(this).attr('data-value');
+                    tagBreadcrumbList.push({
+                        id: tagForm.id,
+                        text: title
+                    });
                     if (tagForm.id === 0) { return ;}
                     loadTag(tagForm);
                 });
-                $('.child-tag-btn').on('click', function () {
-                    tagForm.id = $(this).attr('data-id');
-                    if (tagForm.id === 0) { return ;}
-                    loadTag(tagForm);
+                $('.chose-tag-btn').on('click', function () {
+                    let id = $(this).attr('data-id');
+                    let text = $(this).attr('data-value');
+                    $('#tagTableBody').append(
+                        core.html(specTdhtmlTemp, {
+                            id: id,
+                            title: text
+                        })
+                    );
+                    $('#tagModel').modal('hide');
                 });
             } else {
                 $('#tagTableContent').html('还没有标签。');
@@ -193,4 +206,34 @@ const tagHtmlTemp = `<tr>
         tagForm.id = 0;
         loadTag();
     });
+
+    function drawBreadcrumb() {
+        let html = '';
+        for(let item of tagBreadcrumbList) {
+            html += core.html(tagBreadcrumbTemp, {
+                id: item.id,
+                text: item.text
+            })
+        }
+        $('#tagBreadcrumb').html(html);
+        $('.tag-breadcrumb').on('click', function () {
+            tagForm.id = $(this).attr('data-id');
+            console.log('click .tag-breadcrumb:', tagForm.id);
+            console.log(tagBreadcrumbList);
+            let index = 0;
+            for (; index < tagBreadcrumbList.length - 1; index++) {
+                let item = tagBreadcrumbList[index];
+                if (tagForm.id == item.id) {
+                    console.log('find it', item);
+                    index++;
+                    break;
+                }
+            }
+            console.log(`index: ${index}`);
+            if (index > 0) {
+                tagBreadcrumbList = tagBreadcrumbList.slice(0, index);
+            }
+            loadTag(tagForm);
+        });
+    }
 });

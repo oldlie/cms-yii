@@ -73,18 +73,14 @@ use yii\helpers\Url;
             <div class="from-group">
                 <button type="button" class="btn btn-default btn-block" data-toggle="modal" data-target="#tagModel">选择标签</button>
                 <table class="table table-bordered">
-                    <tr>
-                        <th>ID</th>
-                        <th>标签</th>
-                        <th></th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>散养鸡</td>
-                        <td>
-                            <a href="#" class="text-red"><i class="fa fa-trash"></i></a>
-                        </td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>标签</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tagTableBody"></tbody>
                 </table>
             </div>
         </div>
@@ -221,6 +217,11 @@ use yii\helpers\Url;
                         <!-- ./ createSpecTab -->
                         <div class="chart tab-pane active" id="selectSpecTab" style="position: relative; height: 300px;">
 
+                            <ol id="tagBreadcrumb" class="breadcrumb">
+                                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                                <li class="active">Dashboard</li>
+                            </ol>
+
                             <!-- ./ search input-->
                             <table class="table table-bordered">
                                 <thead>
@@ -231,7 +232,6 @@ use yii\helpers\Url;
                                         <th style="width:60px;">序号</th>
                                         <th style="width:180px;">标签名称</th>
                                         <th>图形文件</th>
-                                        <th>上级标签</th>
                                         <th style="width:80px;">操作</th>
                                     </tr>
                                 </thead>
