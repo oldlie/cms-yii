@@ -17,7 +17,7 @@ class ImageUpload extends Widget
             $this->id = 'file';
         }
         if (!$this->path) {
-            $this->path = '/image/1.jpg';
+            $this->path = 'image/image_default.jpg';
         }
         if (!$this->url) {
             $setting = SystemSettingForm::getSetting();

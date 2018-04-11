@@ -171,7 +171,7 @@ var Pagination = (function () {
         const list = data['list'];
         const length = list.length;
         if (length <= 1) {
-            return;
+            return this._pagination;
         }
         console.log(`pagination render:${_liWarp}`);
         let liHtml = this._core.html(_liWarp, {
@@ -196,7 +196,7 @@ var Pagination = (function () {
         });
         $(this._targetElement).html(html);
 
-        return this._pagination;;
+        return this._pagination;
     }
 
     Pagination.prototype.bindEvent = function (fn) {

@@ -48,8 +48,8 @@ class SpecificationController extends AcfController
 
         $query = FoodSpec::find();
         // $query->andFilterWhere(['>', 'cargo_id', 0]);
-        if ($name = $request->post('name') && $name != '') {
-            $query->andFilterWhere(['like', 'name'], $name);
+        if ($name = $request->post('name')) {
+            $query->andFilterWhere(['like', 'name', $name]);
         }
 
         $page = $request->post('page');
